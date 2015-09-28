@@ -1,4 +1,4 @@
-# Side-wide content Report
+# Site-wide content Report
 
 
 This module adds a "All content, page and files from across all subsites" report in the CMS, so that
