@@ -1,0 +1,28 @@
+Subsite:
+  main:
+    Title: TestMainSite
+  subsite1:
+    Title: TestSubsite1
+  subsite2:
+    Title: TestSubsite2
+
+Page:
+  page1:
+    Title: page1
+    SubsiteID: 0
+  page2:
+    Title: page2
+    SubsiteID: 0
+  page3:
+    Title: page3
+    SubsiteID: =>Subsite.subsite1
+  page4:
+    Title: page4 - not published
+    SubsiteID: =>Subsite.subsite1
+  page5:
+    Title: page5s
+    SubsiteID: =>Subsite.subsite1
+File:
+  file1:
+    Title: file1
+    SubsiteID: 0

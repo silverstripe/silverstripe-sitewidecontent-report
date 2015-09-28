@@ -1,0 +1,20 @@
+es:  
+  SitewideContentReport:
+    Title: 'Reporte del contenido en todo el sitio'
+    Description: 'Todas las páginas y archivo en todos los sub sitios'
+    Name: Nombre
+    Created: Creado
+    LastEdited: 'Fecha de último cambio'
+    PageType: 'Tipo de página'
+    Stage: 'Estado'
+    Published: Publicado
+    Draft: Borrador
+    URL: 'URL'
+    FileType: 'Tipo de archivo'
+    Directory: 'Directorio'
+    AccessFromAllSubsites: '(accesible desde todos los sub sitios)'
+    Subsite: 'Sub sitio'
+    Pages: 'Páginas'
+    Files: 'Archivos'
+    FilterBy: 'Filtro:'
+    MainSite: 'Sitio principal'
