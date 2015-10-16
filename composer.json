@@ -1,5 +1,5 @@
 {
-	"name": "sitewidecontent-report",
+	"name": "silverstripe/sitewidecontent-report",
 	"description": "Report of all pages and files across all subsites",
 	"keywords": [
 		"silverstripe",
