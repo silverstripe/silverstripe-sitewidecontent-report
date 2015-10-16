@@ -1,7 +1,7 @@
 [main]
 host = https://www.transifex.com
 
-[sitewidecontentreport.master]
+[silverstripe-sitewidecontent-report.master]
 file_filter = lang/<lang>.yml
 source_file = lang/en.yml
 source_lang = en
