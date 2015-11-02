@@ -87,7 +87,7 @@ class SitewideContentReport extends SS_Report {
 			$subsites = Subsite::all_sites()->map();
 			$fields->insertBefore(HeaderField::create('PagesTitle', _t('SitewideContentReport.Pages', 'Pages'), 3), 'Report-Pages');
 			$fields->insertBefore(DropdownField::create('AllSubsites', _t('SitewideContentReport.FilterBy', 'Filter by:'), $subsites)
-				->addExtraClass('subsite-filter')
+				->addExtraClass('subsite-filter no-change-track')
 				->setEmptyString('All Subsites')
 			, 'Report-Pages');
 		}
