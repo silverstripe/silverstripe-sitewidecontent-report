@@ -10,7 +10,7 @@ class SitewideContentReport extends SS_Report
      */
     public function title()
     {
-        return _t('SitewideContentReport.Title', 'Site-wide content report');
+        return _t("SitewideContentReport.Title", "Site-wide content report");
     }
 
     /**
@@ -18,7 +18,7 @@ class SitewideContentReport extends SS_Report
      */
     public function description()
     {
-        return _t('SitewideContentReport.Description', 'All pages and files across all Subsites');
+        return _t("SitewideContentReport.Description", "All pages and files across all Subsites");
     }
 
     /**
@@ -29,20 +29,20 @@ class SitewideContentReport extends SS_Report
      */
     public function sourceRecords()
     {
-        if (class_exists('Subsite') && Subsite::get()->count() > 0) {
+        if (class_exists("Subsite") && Subsite::get()->count() > 0) {
             $origMode = Versioned::get_reading_mode();
-            Versioned::set_reading_mode('Stage.Stage');
+            Versioned::set_reading_mode("Stage.Stage");
             $items = array(
-                'Pages' => Subsite::get_from_all_subsites('SiteTree'),
-                'Files' => Subsite::get_from_all_subsites('File'),
+                "Pages" => Subsite::get_from_all_subsites("SiteTree"),
+                "Files" => Subsite::get_from_all_subsites("File"),
             );
             Versioned::set_reading_mode($origMode);
 
             return $items;
         } else {
             return array(
-                'Pages' => Versioned::get_by_stage('SiteTree', 'Stage'),
-                'Files' => File::get(),
+                "Pages" => Versioned::get_by_stage("SiteTree", "Stage"),
+                "Files" => File::get(),
             );
         }
     }
@@ -54,41 +54,41 @@ class SitewideContentReport extends SS_Report
      *
      * @return array
      */
-    public function columns($itemType = 'Pages')
+    public function columns($itemType = "Pages")
     {
         $columns = array(
-            'Title'           => array(
-                "title" => _t('SitewideContentReport.Name', 'Name'),
+            "Title"           => array(
+                "title" => _t("SitewideContentReport.Name", "Name"),
                 "link"  => true,
             ),
-            'Created.Nice'    => _t('SitewideContentReport.Created', 'Date created'),
-            'LastEdited.Nice' => _t('SitewideContentReport.LastEdited', 'Date last edited'),
+            "Created.Nice"    => _t("SitewideContentReport.Created", "Date created"),
+            "LastEdited.Nice" => _t("SitewideContentReport.LastEdited", "Date last edited"),
         );
 
-        $mainSiteLabel = _t('SitewideContentReport.MainSite', 'Main Site');
-        if ($itemType == 'Pages') {
-            $columns['ClassName'] = _t('SitewideContentReport.PageType', 'Page type');
-            $columns['StageState'] = array(
-                'title'      => _t('SitewideContentReport.Stage', 'Stage'),
-                'formatting' => function ($value, $item) {
-                    return ($item->isPublished()) ? _t('SitewideContentReport.Published', 'Published') : _t('SitewideContentReport.Draft', 'Draft');
+        $mainSiteLabel = _t("SitewideContentReport.MainSite", "Main Site");
+        if ($itemType == "Pages") {
+            $columns["ClassName"] = _t("SitewideContentReport.PageType", "Page type");
+            $columns["StageState"] = array(
+                "title"      => _t("SitewideContentReport.Stage", "Stage"),
+                "formatting" => function ($value, $item) {
+                    return ($item->isPublished()) ? _t("SitewideContentReport.Published", "Published") : _t("SitewideContentReport.Draft", "Draft");
                 },
             );
-            $columns['URLSegment'] = _t('SitewideContentReport.URL', 'URL');
+            $columns["URLSegment"] = _t("SitewideContentReport.URL", "URL");
         } else {
-            $columns['FileType'] = _t('SitewideContentReport.FileType', 'File type');
-            $columns['Size'] = _t('SitewideContentReport.Size', 'Size');
-            $columns['Filename'] = _t('SitewideContentReport.Directory', 'Directory');
-            $mainSiteLabel .= ' ' . _t('SitewideContentReport.AccessFromAllSubsites', '(accessible by all subsites)');
+            $columns["FileType"] = _t("SitewideContentReport.FileType", "File type");
+            $columns["Size"] = _t("SitewideContentReport.Size", "Size");
+            $columns["Filename"] = _t("SitewideContentReport.Directory", "Directory");
+            $mainSiteLabel .= " " . _t("SitewideContentReport.AccessFromAllSubsites", "(accessible by all subsites)");
         }
 
-        if (class_exists('Subsite') && Subsite::get()->count() > 0) {
-            $columns['SubsiteName'] = array(
-                'title'      => _t('SitewideContentReport.Subsite', 'Subsite'),
-                'formatting' => function ($value, $item) use ($mainSiteLabel) {
+        if (class_exists("Subsite") && Subsite::get()->count() > 0) {
+            $columns["SubsiteName"] = array(
+                "title"      => _t("SitewideContentReport.Subsite", "Subsite"),
+                "formatting" => function ($value, $item) use ($mainSiteLabel) {
                     $title = ($item->Subsite()->Title) ? $item->Subsite()->Title : $mainSiteLabel;
 
-                    return sprintf('%s', $title);
+                    return $title;
                 },
             );
         }
@@ -101,19 +101,19 @@ class SitewideContentReport extends SS_Report
      */
     public function getCMSFields()
     {
-        Requirements::javascript(SITEWIDE_CONTENT_REPORT . '/javascript/sitewidecontentreport.js');
+        Requirements::javascript(SITEWIDE_CONTENT_REPORT . "/javascript/sitewidecontentreport.js");
         $fields = parent::getCMSFields();
 
-        if (class_exists('Subsite')) {
+        if (class_exists("Subsite")) {
             $subsites = Subsite::all_sites()->map();
-            $fields->insertBefore(HeaderField::create('PagesTitle', _t('SitewideContentReport.Pages', 'Pages'), 3), 'Report-Pages');
-            $fields->insertBefore(DropdownField::create('AllSubsites', _t('SitewideContentReport.FilterBy', 'Filter by:'), $subsites)
-                ->addExtraClass('subsite-filter no-change-track')
-                ->setEmptyString('All Subsites'), 'Report-Pages');
+            $fields->insertBefore(HeaderField::create("PagesTitle", _t("SitewideContentReport.Pages", "Pages"), 3), "Report-Pages");
+            $fields->insertBefore(DropdownField::create("AllSubsites", _t("SitewideContentReport.FilterBy", "Filter by:"), $subsites)
+                ->addExtraClass("subsite-filter no-change-track")
+                ->setEmptyString("All Subsites"), "Report-Pages");
         }
 
-        $fields->push(HeaderField::create('FilesTitle', _t('SitewideContentReport.Files', 'Files'), 3));
-        $fields->push($this->getReportField('Files'));
+        $fields->push(HeaderField::create("FilesTitle", _t("SitewideContentReport.Files", "Files"), 3));
+        $fields->push($this->getReportField("Files"));
 
         return $fields;
     }
@@ -126,25 +126,25 @@ class SitewideContentReport extends SS_Report
      *
      * @return GridField
      */
-    public function getReportField($itemType = 'Pages')
+    public function getReportField($itemType = "Pages")
     {
-        $params = isset($_REQUEST['filters']) ? $_REQUEST['filters'] : array();
+        $params = isset($_REQUEST["filters"]) ? $_REQUEST["filters"] : array();
         $items = $this->sourceRecords($params, null, null);
 
-        $gridField = new GridFieldBasicContentReport('Report-' . $itemType, false, $items[$itemType]);
+        $gridField = new GridFieldBasicContentReport("Report-" . $itemType, false, $items[$itemType]);
 
         $gridFieldConfig = GridFieldConfig::create()->addComponents(
             new GridFieldToolbarHeader(),
             new GridFieldSortableHeader(),
             new GridFieldDataColumns(),
             new GridFieldPaginator(),
-            new GridFieldButtonRow('after'),
-            $printButton = new GridFieldPrintButton('buttons-after-left'),
-            $exportButton = new GridFieldExportButton('buttons-after-left')
+            new GridFieldButtonRow("after"),
+            $printButton = new GridFieldPrintButton("buttons-after-left"),
+            $exportButton = new GridFieldExportButton("buttons-after-left")
         );
 
         $gridField->setConfig($gridFieldConfig);
-        $columns = $gridField->getConfig()->getComponentByType('GridFieldDataColumns');
+        $columns = $gridField->getConfig()->getComponentByType("GridFieldDataColumns");
 
 
         $displayFields = array();
@@ -154,30 +154,30 @@ class SitewideContentReport extends SS_Report
         // Parse the column information
         foreach ($this->columns($itemType) as $source => $info) {
             if (is_string($info)) {
-                $info = array('title' => $info);
+                $info = array("title" => $info);
             }
 
-            if (isset($info['formatting'])) {
-                $fieldFormatting[$source] = $info['formatting'];
+            if (isset($info["formatting"])) {
+                $fieldFormatting[$source] = $info["formatting"];
             }
-            if (isset($info['csvFormatting'])) {
-                $csvFieldFormatting[$source] = $info['csvFormatting'];
+            if (isset($info["csvFormatting"])) {
+                $csvFieldFormatting[$source] = $info["csvFormatting"];
             }
-            if (isset($info['casting'])) {
-                $fieldCasting[$source] = $info['casting'];
+            if (isset($info["casting"])) {
+                $fieldCasting[$source] = $info["casting"];
             }
 
-            if (isset($info['link']) && $info['link']) {
+            if (isset($info["link"]) && $info["link"]) {
                 $fieldFormatting[$source] = function ($value, &$item) {
                     return sprintf(
-                        '<a href="%s">%s</a>',
-                        Controller::join_links(singleton('CMSPageEditController')->Link('show'), $item->ID),
+                        "<a href='%s'>%s</a>",
+                        Controller::join_links(singleton("CMSPageEditController")->Link("show"), $item->ID),
                         $value
                     );
                 };
             }
 
-            $displayFields[$source] = isset($info['title']) ? $info['title'] : $source;
+            $displayFields[$source] = isset($info["title"]) ? $info["title"] : $source;
         }
         $columns->setDisplayFields($displayFields);
         $columns->setFieldCasting($fieldCasting);
@@ -199,21 +199,21 @@ class SitewideContentReport extends SS_Report
      *
      * @return GridFieldDataColumns
      */
-    public function getPrintExportColumns($gridField, $itemType = 'Pages', $columns)
+    public function getPrintExportColumns($gridField, $itemType = "Pages", $columns)
     {
         $displayColumns = $columns->getDisplayFields($gridField);
-        unset($displayColumns['SubsiteName']);
-        unset($displayColumns['StageState']);
-        $displayColumns['Subsite.Title'] = _t('SitewideContentReport.Subsite', 'Subsite');
-        if ($itemType == 'Pages') {
-            $displayColumns['isPublished'] = _t('SitewideContentReport.Stage', 'Stage');
+        unset($displayColumns["SubsiteName"]);
+        unset($displayColumns["StageState"]);
+        $displayColumns["Subsite.Title"] = _t("SitewideContentReport.Subsite", "Subsite");
+        if ($itemType == "Pages") {
+            $displayColumns["isPublished"] = _t("SitewideContentReport.Stage", "Stage");
         } else {
-            unset($displayColumns['Stage']);
-            $displayColumns['Subsite.Title'] = _t('SitewideContentReport.Subsite', 'Subsite');
+            unset($displayColumns["Stage"]);
+            $displayColumns["Subsite.Title"] = _t("SitewideContentReport.Subsite", "Subsite");
         }
 
-        if (!class_exists('Subsite')) {
-            unset($displayColumns['Subsite.Title']);
+        if (!class_exists("Subsite")) {
+            unset($displayColumns["Subsite.Title"]);
         }
 
         return $displayColumns;
@@ -236,12 +236,12 @@ class GridFieldBasicContentReport extends GridField
         }
 
         // Default implementation
-        if ($record->hasMethod('relField')) {
+        if ($record->hasMethod("relField")) {
             $value = $record->relField($fieldName);
-            if ($fieldName == 'isPublished') {
-                $value = ($value) ? _t('SitewideContentReport.Published', 'Published') : _t('SitewideContentReport.Draft', 'Draft');
-            } elseif ($fieldName == 'Subsite.Title') {
-                $value = ($value) ? $value : _t('SitewideContentReport.MainSite', 'Main Site');
+            if ($fieldName == "isPublished") {
+                $value = ($value) ? _t("SitewideContentReport.Published", "Published") : _t("SitewideContentReport.Draft", "Draft");
+            } elseif ($fieldName == "Subsite.Title") {
+                $value = ($value) ? $value : _t("SitewideContentReport.MainSite", "Main Site");
             }
 
             return $value;
@@ -264,10 +264,10 @@ class GridFieldBasicContentReport extends GridField
         $rowClasses = $this->newRowClasses($total, $index, $record);
 
         return array(
-            'class'           => implode(' ', $rowClasses),
-            'data-id'         => $record->ID,
-            'data-class'      => $record->ClassName,
-            'data-subsite-id' => $record->SubsiteID,
+            "class"           => implode(" ", $rowClasses),
+            "data-id"         => $record->ID,
+            "data-class"      => $record->ClassName,
+            "data-subsite-id" => $record->SubsiteID,
         );
     }
 }
