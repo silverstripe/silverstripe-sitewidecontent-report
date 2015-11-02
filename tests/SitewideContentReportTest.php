@@ -53,9 +53,11 @@ class SitewideContentReportTest extends SapphireTest
 
         if (class_exists("Subsite")) {
             $field = $fields->fieldByName("AllSubsites");
-            $count = count($field->getSource());
+            $count = count(array_filter(array_keys($field->getSource()), function($value) {
+                return is_int($value);
+            }));
 
-            $this->assertEquals($count, 4, "2 subsites plus 2 added options to filter by subsite");
+            $this->assertEquals(4, $count, "2 subsites plus 2 added options to filter by subsite");
         } else {
             $this->assertNull($fields->fieldByName("AllSubsites"));
         }

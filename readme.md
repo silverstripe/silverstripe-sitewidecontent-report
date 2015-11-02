@@ -25,3 +25,17 @@ can edit pages on.
 To edit the permission to check for when filtering these subsites, you can update the
 `Member.subsite_description_permission` config to any other permission. By default this
 is set to `SITETREE_EDIT_ALL`.
+
+## Documentation
+
+See the [docs/en](docs/en/user-documentation.md) folder.
+
+## Versioning
+
+This library follows [Semver](http://semver.org). According to Semver, you will be able to upgrade to any minor or patch version of this library without any breaking changes to the public API. Semver also requires that we clearly define the public API for this library.
+
+All methods, with `public` visibility, are part of the public API. All other methods are not part of the public API. Where possible, we'll try to keep `protected` methods backwards-compatible in minor/patch versions, but if you're overriding methods then please test your work before upgrading.
+
+## Reporting Issues
+
+Please [create an issue](https://github.com/silverstripe/sitewidecontent-report/issues) for any bugs you've found, or features you're missing.
