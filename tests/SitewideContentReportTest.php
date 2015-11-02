@@ -2,6 +2,9 @@
 
 class SitewideContentReportTest extends SapphireTest
 {
+    /**
+     * @var string
+     */
     protected static $fixture_file = 'SitewideContentReportTest.yml';
 
     public function testSourceRecords()

@@ -1,26 +1,32 @@
 <?php
 
 /**
- * Content side-report listing all pages and files from all subites
+ * Content side-report listing all pages and files from all sub sites.
  */
 class SitewideContentReport extends SS_Report
 {
+    /**
+     * @return string
+     */
     public function title()
     {
         return _t('SitewideContentReport.Title', 'Site-wide content report');
     }
 
+    /**
+     * @return string
+     */
     public function description()
     {
         return _t('SitewideContentReport.Description', 'All pages and files across all Subsites');
     }
 
     /**
-     * returns an array with 2 elements, one with a list of Page on the site (and all subsites if
+     * Returns an array with 2 elements, one with a list of Page on the site (and all subsites if
      * applicable) and another with files
      *
      * @return array
-     **/
+     */
     public function sourceRecords()
     {
         if (class_exists('Subsite') && Subsite::get()->count() > 0) {
@@ -42,13 +48,12 @@ class SitewideContentReport extends SS_Report
     }
 
     /**
-     * returns columns for the gridfields on this report
+     * Returns columns for the grid fields on this report.
      *
-     * @param string $itemType , It can be 'Pages' or 'Files' depending on which GridField we are
-     *                         getting the columns for.
+     * @param string $itemType (i.e 'Pages' or 'Files')
      *
      * @return array
-     **/
+     */
     public function columns($itemType = 'Pages')
     {
         $columns = array(
@@ -91,6 +96,9 @@ class SitewideContentReport extends SS_Report
         return $columns;
     }
 
+    /**
+     * @return FieldList
+     */
     public function getCMSFields()
     {
         Requirements::javascript(SITEWIDE_CONTENT_REPORT . '/javascript/sitewidecontentreport.js');
@@ -111,13 +119,13 @@ class SitewideContentReport extends SS_Report
     }
 
     /**
-     * creates a GridField for pages and another one for files with different columns
-     * GridFields have an export and a print button.
+     * Creates a GridField for pages and another one for files with different columns.
+     * Grid fields have an export and a print button.
      *
-     * @param string $itemType , it can be 'Pages' or 'Files'
+     * @param string $itemType (i.e 'Pages' or 'Files')
      *
      * @return GridField
-     **/
+     */
     public function getReportField($itemType = 'Pages')
     {
         $params = isset($_REQUEST['filters']) ? $_REQUEST['filters'] : array();
@@ -183,14 +191,14 @@ class SitewideContentReport extends SS_Report
     }
 
     /**
-     * returns the columns for the export and print functionality
+     * Returns the columns for the export and print functionality.
      *
-     * @param GridField            , $gridField
-     * @param string               , @itemType, it can be 'Pages' or 'Files'
-     * @param GridFieldDataColumns , $columns
+     * @param GridField $gridField
+     * @param string $itemType (i.e 'Pages' or 'Files')
+     * @param GridFieldDataColumns $columns
      *
-     * @return GridFieldDataColumns, the columns to be used for the print and export functionality
-     **/
+     * @return GridFieldDataColumns
+     */
     public function getPrintExportColumns($gridField, $itemType = 'Pages', $columns)
     {
         $displayColumns = $columns->getDisplayFields($gridField);
@@ -215,9 +223,8 @@ class SitewideContentReport extends SS_Report
 class GridFieldBasicContentReport extends GridField
 {
     /**
-     * Get the value of a named field  on the given record.
-     * Use of this method ensures that any special rules around the data for this gridfield are
-     * followed.
+     * Get the value of a named field  on the given record. Use of this method ensures
+     * that any special rules around the data for this gridfield are followed.
      */
     public function getDataFieldValue($record, $fieldName)
     {
@@ -245,6 +252,13 @@ class GridFieldBasicContentReport extends GridField
         }
     }
 
+    /**
+     * @param int $total
+     * @param int $index
+     * @param DataObject $record
+     *
+     * @return array
+     */
     protected function getRowAttributes($total, $index, $record)
     {
         $rowClasses = $this->newRowClasses($total, $index, $record);
