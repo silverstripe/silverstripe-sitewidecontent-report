@@ -169,9 +169,17 @@ class SitewideContentReport extends SS_Report
 
             if (isset($info["link"]) && $info["link"]) {
                 $fieldFormatting[$source] = function ($value, &$item) {
+                    if ($item instanceof Page) {
+                        return sprintf(
+                            "<a href='%s'>%s</a>",
+                            Controller::join_links(singleton("CMSPageEditController")->Link("show"), $item->ID),
+                            $value
+                        );
+                    }
+
                     return sprintf(
                         "<a href='%s'>%s</a>",
-                        Controller::join_links(singleton("CMSPageEditController")->Link("show"), $item->ID),
+                        Controller::join_links(singleton("AssetAdmin")->Link("EditForm"), "field/File/item", $item->ID, "edit"),
                         $value
                     );
                 };
