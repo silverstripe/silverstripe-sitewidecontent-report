@@ -4,10 +4,10 @@
 This module adds a "All content, page and files from across all subsites" report in the CMS, so that
 an administrator can get a quick overview of content across subsite in the site.
 
-[![Build Status](http://img.shields.io/travis/silverstripe/sitewidecontent-report.svg?style=flat-square)](https://travis-ci.org/silverstripe/sitewidecontent-report)
-[![Code Quality](http://img.shields.io/scrutinizer/g/silverstripe/sitewidecontent-report.svg?style=flat-square)](https://scrutinizer-ci.com/g/silverstripe/sitewidecontent-report)
+[![Build Status](http://img.shields.io/travis/silverstripe/silverstripe-sitewidecontent-report.svg?style=flat-square)](https://travis-ci.org/silverstripe/silverstripe-sitewidecontent-report)
+[![Code Quality](http://img.shields.io/scrutinizer/g/silverstripe/silverstripe-sitewidecontent-report.svg?style=flat-square)](https://scrutinizer-ci.com/g/silverstripe/silverstripe-sitewidecontent-report)
 [![Version](http://img.shields.io/packagist/v/silverstripe/sitewidecontent-report.svg?style=flat-square)](https://packagist.org/packages/silverstripe/sitewidecontent-report)
-[![License](http://img.shields.io/packagist/l/silverstripe/sitewidecontent-report.svg?style=flat-square)](LICENSE.md)
+[![License](http://img.shields.io/packagist/l/silverstripe/sitewidecontent-report.svg?style=flat-square)](license.md)
 
 ## Install
 
