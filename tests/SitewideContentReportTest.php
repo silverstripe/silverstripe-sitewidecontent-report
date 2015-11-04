@@ -1,45 +1,65 @@
 <?php
 
-class SitewideContentReportTest extends SapphireTest {
+/**
+ * @mixin PHPUnit_Framework_TestCase
+ */
+class SitewideContentReportTest extends SapphireTest
+{
+    /**
+     * @var string
+     */
+    protected static $fixture_file = "SitewideContentReportTest.yml";
 
-	protected static $fixture_file = 'SitewideContentReportTest.yml';
+    /**
+     * @inheritdoc
+     */
+    public function setUp()
+    {
+        parent::setUp();
 
-	function testSourceRecords() {
+        foreach (range(1, 5) as $i) {
+            /** @var SiteTree $page */
+            $page = $this->objFromFixture("Page", "page{$i}");
 
-		$this->objFromFixture('Page', 'page1')->doPublish();
-		$this->objFromFixture('Page', 'page2')->doPublish();
-		$this->objFromFixture('Page', 'page3')->doPublish();
-		$this->objFromFixture('Page', 'page4');
-		$this->objFromFixture('Page', 'page5');
+            if ($i <= 3) {
+                $page->doPublish();
+            }
+        }
+    }
 
-		$report = SitewideContentReport::create();
+    public function testSourceRecords()
+    {
+        $report = SitewideContentReport::create();
+        $records = $report->sourceRecords();
 
-		$records = $report->sourceRecords();
-		$this->assertEquals(count($records), 2, 'Returns an array with 2 items, one for pages and one for files');
-		$this->assertTrue(isset($records['Pages']));
-		$this->assertTrue(isset($records['Files']));
+        $this->assertEquals(count($records), 2, "Returns an array with 2 items, one for pages and one for files");
+        $this->assertArrayHasKey("Pages", $records);
+        $this->assertArrayHasKey("Files", $records);
 
-		$Pages = $records['Pages'];
-		$this->assertEquals($Pages->count(), 5, 'Total number of pages');
+        /** @var DataList $pages */
+        $pages = $records["Pages"];
 
-		$Files = $records['Files'];
-		$this->assertEquals($Files->count(), 1, 'Total number of files');
-	}
+        /** @var DataList $files */
+        $files = $records["Files"];
 
-	function testGetCMSFields() {
-		$this->objFromFixture('Page', 'page1')->doPublish();
-		$this->objFromFixture('Page', 'page2')->doPublish();
-		$this->objFromFixture('Page', 'page3')->doPublish();
-		$this->objFromFixture('Page', 'page4');
-		$this->objFromFixture('Page', 'page5');
+        $this->assertEquals($pages->count(), 5, "Total number of pages");
+        $this->assertEquals($files->count(), 1, "Total number of files");
+    }
 
-		$report = SitewideContentReport::create();
-		$fields = $report->getCMSFields();
-		if(class_exists('Subsite')) {
-			$dropdown = $fields->fieldByName('AllSubsites');
-			$this->assertEquals(count($dropdown->getSource()), 5, '3 subsites plus 2 added options to filter by subsite');
-		} else {
-			$this->assertNull($fields->fieldByName('AllSubsites'));
-		}
-	}
+    public function testGetCMSFields()
+    {
+        $report = SitewideContentReport::create();
+        $fields = $report->getCMSFields();
+
+        if (class_exists("Subsite")) {
+            $field = $fields->fieldByName("AllSubsites");
+            $count = count(array_filter(array_keys($field->getSource()), function($value) {
+                return is_int($value);
+            }));
+
+            $this->assertEquals(4, $count, "2 subsites plus 2 added options to filter by subsite");
+        } else {
+            $this->assertNull($fields->fieldByName("AllSubsites"));
+        }
+    }
 }
