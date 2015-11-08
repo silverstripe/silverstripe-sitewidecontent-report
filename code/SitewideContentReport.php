@@ -210,9 +210,12 @@ class SitewideContentReport extends SS_Report
     public function getPrintExportColumns($gridField, $itemType = "Pages", $columns)
     {
         $displayColumns = $columns->getDisplayFields($gridField);
+
         unset($displayColumns["SubsiteName"]);
         unset($displayColumns["StageState"]);
+
         $displayColumns["Subsite.Title"] = _t("SitewideContentReport.Subsite", "Subsite");
+
         if ($itemType == "Pages") {
             $displayColumns["isPublished"] = _t("SitewideContentReport.Stage", "Stage");
         } else {
@@ -223,6 +226,11 @@ class SitewideContentReport extends SS_Report
         if (!class_exists("Subsite")) {
             unset($displayColumns["Subsite.Title"]);
         }
+
+        $displayColumns["AbsoluteLink"] = _t("SitewideContentReport.Link", "Link");
+
+        unset($displayColumns["URL"]);
+        unset($displayColumns["URLSegment"]);
 
         return $displayColumns;
     }
@@ -243,6 +251,16 @@ class GridFieldBasicContentReport extends GridField
             return $callback($record);
         }
 
+        // Links
+        if ($fieldName == "Link") {
+            return $record->AbsoluteLink();
+        }
+
+        // URLSegments
+        if ($fieldName == "URL" || $fieldName == "URLSegment") {
+            return $record->RelativeLink();
+        }
+
         // Default implementation
         if ($record->hasMethod("relField")) {
             $value = $record->relField($fieldName);
@@ -251,7 +269,6 @@ class GridFieldBasicContentReport extends GridField
             } elseif ($fieldName == "Subsite.Title") {
                 $value = ($value) ? $value : _t("SitewideContentReport.MainSite", "Main Site");
             }
-
             return $value;
         } elseif ($record->hasMethod($fieldName)) {
             return $record->$fieldName();
