@@ -1,0 +1,8 @@
+---
+Name: sitewidecontenttaxonomy
+Only:
+  moduleexists: taxonomy
+---
+SitewideContentReport:
+  extensions:
+    - SitewideContentTaxonomy
