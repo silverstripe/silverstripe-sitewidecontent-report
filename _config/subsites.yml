@@ -1,0 +1,11 @@
+---
+Name: sitewidecontentsubsites
+Only:
+  moduleexists: subsites
+---
+SitewideContentReport:
+  extensions:
+    - SitewideContentSubsites
+GridFieldBasicContentReport:
+  extensions:
+    - SitewideContentSubsites

@@ -1,0 +1,8 @@
+---
+Name: sitewidecontentreview
+Only:
+  moduleexists: contentreview
+---
+SitewideContentReport:
+  extensions:
+    - SitewideContentReview
