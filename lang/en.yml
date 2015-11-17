@@ -1,20 +1,27 @@
 en:
   SitewideContentReport:
-    Title: 'Site-wide content report'
-    Description: 'All pages and files across all Subsites'
-    Name: 'Name'
-    Created: 'Date created'
-    LastEdited: 'Date last edited'
-    PageType: 'Page type'
-    Stage: 'Stage'
-    Published: 'Published'
-    Draft: 'Draft'
-    URL: 'URL'
-    FileType: 'File type'
-    Directory: 'Directory'
     AccessFromAllSubsites: '(accessible by all subsites)'
-    Subsite: 'Subsite'
-    Pages: 'Pages'
-    Files: 'Files'
+    Created: 'Date created'
+    Description: 'All pages and files across all Subsites'
+    Directory: Directory
+    Draft: Draft
+    FileType: 'File type'
+    Files: Files
     FilterBy: 'Filter by:'
-    MainSite: 'Main site'
+    LastEdited: 'Date last edited'
+    Link: Link
+    MainSite: 'Main Site'
+    MetaDescription: Description
+    Name: Name
+    PageType: 'Page type'
+    Pages: Pages
+    Published: Published
+    PublishedWithChanges: 'Published (with changes)'
+    ReviewDate: 'Review Date'
+    Reviewer: Reviewer
+    Size: Size
+    Stage: Stage
+    Subsite: Subsite
+    Tags: Tags
+    Title: 'Site-wide content report'
+    URL: URL
