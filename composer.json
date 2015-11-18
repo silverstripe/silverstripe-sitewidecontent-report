@@ -25,5 +25,12 @@
 			"name": "Christopher Pitt",
 			"email": "cgpitt@gmail.com"
 		}
-	]
+	],
+	"extra": 
+	{
+		"branch-alias": 
+		{
+			"dev-master": "2.0.x-dev"
+		}
+	}
 }
