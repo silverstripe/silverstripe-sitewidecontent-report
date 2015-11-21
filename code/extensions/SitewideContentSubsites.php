@@ -40,7 +40,8 @@ class SitewideContentSubsites extends Extension
         );
     }
 
-	public function updateRowAttributes($total, $index, $record, &$attributes) {
-		$attributes['data-subsite-id'] = $record->SubsiteID;
-	}
+    public function updateRowAttributes($total, $index, $record, &$attributes)
+    {
+        $attributes['data-subsite-id'] = $record->SubsiteID;
+    }
 }

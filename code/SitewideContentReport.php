@@ -266,8 +266,8 @@ class GridFieldBasicContentReport extends GridField
      */
     protected function getRowAttributes($total, $index, $record)
     {
-		$attributes = parent::getRowAttributes($total, $index, $record);
-		$this->extend('updateRowAttributes', $total, $index, $record, $attributes);
-		return $attributes;
+        $attributes = parent::getRowAttributes($total, $index, $record);
+        $this->extend('updateRowAttributes', $total, $index, $record, $attributes);
+        return $attributes;
     }
 }
