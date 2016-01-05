@@ -1,4 +1,7 @@
-# User Documentation
+title: Site-wide content report
+summary: View report of all content on your site (and subsites).
+
+# Site-wide content report user guide
 
 ## Viewing the report
 To view the report, navigate to 'Reports' in the menu on the left and click on 'Site-wide content report'.
