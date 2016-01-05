@@ -28,7 +28,7 @@ is set to `SITETREE_EDIT_ALL`.
 
 ## Documentation
 
-See the [docs/en](docs/en/user-documentation.md) folder.
+See the [docs/en](docs/en/index.md) folder.
 
 ## Versioning
 
