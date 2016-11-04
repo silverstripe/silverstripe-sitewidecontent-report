@@ -102,7 +102,16 @@ class SitewideContentReport extends SS_Report
             );
         } else {
             // File specific fields
-            $columns['FileType'] = _t('SitewideContentReport.FileType', 'File type');
+            $columns['FileType'] = array(
+                'title' => _t('SitewideContentReport.FileType', 'File type'),
+                'datasource' => function ($record) {
+                    // Handle folders separately
+                    if ($record instanceof Folder) {
+                        return $record->i18n_singular_name();
+                    }
+                    return $record->getFileType();
+                }
+            );
             $columns['Size'] = _t('SitewideContentReport.Size', 'Size');
             $columns['Filename'] = _t('SitewideContentReport.Directory', 'Directory');
         }
