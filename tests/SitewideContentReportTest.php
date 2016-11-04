@@ -77,7 +77,7 @@ class SitewideContentReportTest extends SapphireTest
         $this->assertArrayHasKey('Title', $displayed);
         $this->assertArrayHasKey('Created', $displayed);
         $this->assertArrayHasKey('LastEdited', $displayed);
-        $this->assertArrayHasKey('ClassName', $displayed);
+        $this->assertArrayHasKey('i18n_singular_name', $displayed);
         $this->assertArrayHasKey('StageState', $displayed);
 
         // Use correct link
@@ -105,7 +105,7 @@ class SitewideContentReportTest extends SapphireTest
         $this->assertArrayHasKey('Title', $exported);
         $this->assertArrayHasKey('Created', $exported);
         $this->assertArrayHasKey('LastEdited', $exported);
-        $this->assertArrayHasKey('ClassName', $exported);
+        $this->assertArrayHasKey('i18n_singular_name', $exported);
         $this->assertArrayHasKey('StageState', $exported);
 
         // Export-only fields

@@ -77,11 +77,11 @@ class SitewideContentReport extends SS_Report
 
         if ($itemType == 'Pages') {
             // Page specific fields
-            $columns['ClassName'] = _t('SitewideContentReport.PageType', 'Page type');
+            $columns['i18n_singular_name'] = _t('SitewideContentReport.PageType', 'Page type');
             $columns['StageState'] = array(
                 'title' => _t('SitewideContentReport.Stage', 'Stage'),
                 'formatting' => function ($value, $item) {
-                    // Stage only 
+                    // Stage only
                     if (!$item->getExistsOnLive()) {
                         return _t('SitewideContentReport.Draft', 'Draft');
                     }
