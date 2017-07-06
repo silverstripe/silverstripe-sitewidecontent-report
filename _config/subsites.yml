@@ -3,9 +3,9 @@ Name: sitewidecontentsubsites
 Only:
   moduleexists: subsites
 ---
-SitewideContentReport:
+SilverStripe\SiteWideContentReport\SitewideContentReport:
   extensions:
-    - SitewideContentSubsites
-GridFieldBasicContentReport:
+    - SilverStripe\SiteWideContentReport\Model\SitewideContentSubsites
+SilverStripe\SiteWideContentReport\Form\GridFieldBasicContentReport:
   extensions:
-    - SitewideContentSubsites
+    - SilverStripe\SiteWideContentReport\Model\SitewideContentSubsites

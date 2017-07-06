@@ -3,6 +3,6 @@ Name: sitewidecontenttaxonomy
 Only:
   moduleexists: taxonomy
 ---
-SitewideContentReport:
+SilverStripe\SiteWideContentReport\SitewideContentReport:
   extensions:
-    - SitewideContentTaxonomy
+    - SilverStripe\SiteWideContentReport\Model\SitewideContentTaxonomy

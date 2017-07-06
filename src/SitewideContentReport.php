@@ -1,9 +1,40 @@
 <?php
 
+namespace SilverStripe\SiteWideContentReport;
+
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\GridField\GridField;
+// TODO uses Subsites module, it needs to be upgraded first
+use Subsite;
+use Page;
+use SilverStripe\Versioned\Versioned;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Assets\File;
+use SilverStripe\Assets\Folder;
+use SilverStripe\View\Requirements;
+use SilverStripe\Forms\HeaderField;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\SiteWideContentReport\Form\GridFieldBasicContentReport;
+use SilverStripe\Forms\GridField\GridFieldConfig;
+use SilverStripe\Forms\GridField\GridFieldToolbarHeader;
+use SilverStripe\Forms\GridField\GridFieldSortableHeader;
+use SilverStripe\Forms\GridField\GridFieldDataColumns;
+use SilverStripe\Forms\GridField\GridFieldPaginator;
+use SilverStripe\Forms\GridField\GridFieldButtonRow;
+use SilverStripe\Forms\GridField\GridFieldPrintButton;
+use SilverStripe\Forms\GridField\GridFieldExportButton;
+use SilverStripe\CMS\Controllers\CMSPageEditController;
+use SilverStripe\Control\Controller;
+use SilverStripe\AssetAdmin\Controller\AssetAdmin;
+use SilverStripe\Reports\Report;
+
 /**
  * Content side-report listing all pages and files from all sub sites.
+ *
+ * Class SitewideContentReport
+ * @package SilverStripe\SiteWideContentReport
  */
-class SitewideContentReport extends SS_Report
+class SitewideContentReport extends Report
 {
     /**
      * @return string
@@ -32,18 +63,18 @@ class SitewideContentReport extends SS_Report
         if (class_exists('Subsite') && Subsite::get()->count() > 0) {
             $origMode = Versioned::get_reading_mode();
             Versioned::set_reading_mode('Stage.Stage');
-            $items = array(
-                'Pages' => Subsite::get_from_all_subsites('SiteTree'),
-                'Files' => Subsite::get_from_all_subsites('File'),
-            );
+            $items = [
+                'Pages' => Subsite::get_from_all_subsites(SiteTree::class),
+                'Files' => Subsite::get_from_all_subsites(File::class),
+            ];
             Versioned::set_reading_mode($origMode);
 
             return $items;
         } else {
-            return array(
-                'Pages' => Versioned::get_by_stage('SiteTree', 'Stage'),
+            return [
+                'Pages' => Versioned::get_by_stage(SiteTree::class, 'Stage'),
                 'Files' => File::get(),
-            );
+            ];
         }
     }
 
@@ -56,29 +87,29 @@ class SitewideContentReport extends SS_Report
      */
     public function columns($itemType = 'Pages')
     {
-        $columns = array(
-            'Title' => array(
+        $columns = [
+            'Title' => [
                 'title' => _t('SitewideContentReport.Name', 'Name'),
                 'link' => true,
-            ),
-            'Created' => array(
+            ],
+            'Created' => [
                 'title' => _t('SitewideContentReport.Created', 'Date created'),
                 'formatting' => function ($value, $item) {
                     return $item->dbObject('Created')->Nice();
                 },
-            ),
-            'LastEdited' => array(
+            ],
+            'LastEdited' => [
                 'title' => _t('SitewideContentReport.LastEdited', 'Date last edited'),
                 'formatting' => function ($value, $item) {
                     return $item->dbObject('LastEdited')->Nice();
                 },
-            ),
-        );
+            ],
+        ];
 
         if ($itemType == 'Pages') {
             // Page specific fields
             $columns['i18n_singular_name'] = _t('SitewideContentReport.PageType', 'Page type');
-            $columns['StageState'] = array(
+            $columns['StageState'] = [
                 'title' => _t('SitewideContentReport.Stage', 'Stage'),
                 'formatting' => function ($value, $item) {
                     // Stage only
@@ -94,24 +125,25 @@ class SitewideContentReport extends SS_Report
                     // If on live and unmodified
                     return _t('SitewideContentReport.Published', 'Published');
                 },
-            );
+            ];
             $columns['RelativeLink'] = _t('SitewideContentReport.Link', 'Link');
-            $columns['MetaDescription'] = array(
+            $columns['MetaDescription'] = [
                 'title' => _t('SitewideContentReport.MetaDescription', 'Description'),
                 'printonly' => true,
-            );
+            ];
         } else {
             // File specific fields
-            $columns['FileType'] = array(
+            $columns['FileType'] = [
                 'title' => _t('SitewideContentReport.FileType', 'File type'),
                 'datasource' => function ($record) {
                     // Handle folders separately
                     if ($record instanceof Folder) {
                         return $record->i18n_singular_name();
                     }
+
                     return $record->getFileType();
                 }
-            );
+            ];
             $columns['Size'] = _t('SitewideContentReport.Size', 'Size');
             $columns['Filename'] = _t('SitewideContentReport.Directory', 'Directory');
         }
@@ -171,18 +203,18 @@ class SitewideContentReport extends SS_Report
         $gridField->setConfig($gridFieldConfig);
 
         /* @var $columns GridFieldDataColumns */
-        $columns = $gridField->getConfig()->getComponentByType('GridFieldDataColumns');
+        $columns = $gridField->getConfig()->getComponentByType(GridFieldDataColumns::class);
 
-        $exportFields = array();
-        $displayFields = array();
-        $fieldCasting = array();
-        $fieldFormatting = array();
-        $dataFields = array();
+        $exportFields = [];
+        $displayFields = [];
+        $fieldCasting = [];
+        $fieldFormatting = [];
+        $dataFields = [];
 
         // Parse the column information
         foreach ($this->columns($itemType) as $source => $info) {
             if (is_string($info)) {
-                $info = array('title' => $info);
+                $info = ['title' => $info];
             }
 
             if (isset($info['formatting'])) {
@@ -197,14 +229,16 @@ class SitewideContentReport extends SS_Report
                     if ($item instanceof Page) {
                         return sprintf(
                             "<a href='%s'>%s</a>",
-                            Controller::join_links(singleton('CMSPageEditController')->Link('show'), $item->ID),
+                            Controller::join_links(singleton(CMSPageEditController::class)->Link('show'), $item->ID),
                             $value
                         );
                     }
 
                     return sprintf(
                         "<a href='%s'>%s</a>",
-                        Controller::join_links(singleton('AssetAdmin')->Link('EditForm'), 'field/File/item', $item->ID, 'edit'),
+                        Controller::join_links(
+                            singleton(AssetAdmin::class)->Link('EditForm'), 'field/File/item', $item->ID, 'edit'
+                        ),
                         $value
                     );
                 };
@@ -226,6 +260,7 @@ class SitewideContentReport extends SS_Report
             // Assume that all displayed fields are printed also
             $exportFields[$source] = $fieldTitle;
         }
+
         // Set custom evaluated columns
         $gridField->addDataFields($dataFields);
 
@@ -261,22 +296,5 @@ class SitewideContentReport extends SS_Report
         $this->extend('updatePrintExportColumns', $gridField, $itemType, $exportColumns);
 
         return $exportColumns;
-    }
-}
-
-class GridFieldBasicContentReport extends GridField
-{
-    /**
-     * @param int        $total
-     * @param int        $index
-     * @param DataObject $record
-     *
-     * @return array
-     */
-    protected function getRowAttributes($total, $index, $record)
-    {
-        $attributes = parent::getRowAttributes($total, $index, $record);
-        $this->extend('updateRowAttributes', $total, $index, $record, $attributes);
-        return $attributes;
     }
 }

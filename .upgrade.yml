@@ -1,0 +1,6 @@
+mappings:
+  SitewideContentReport: SilverStripe\SiteWideContentReport\SitewideContentReport
+  GridFieldBasicContentReport: SilverStripe\SiteWideContentReport\Form\GridFieldBasicContentReport
+  SitewideContentReview: SilverStripe\SiteWideContentReport\Model\SitewideContentReview
+  SitewideContentSubsites: SilverStripe\SiteWideContentReport\Model\SitewideContentSubsites
+  SitewideContentTaxonomy: SilverStripe\SiteWideContentReport\Model\SitewideContentTaxonomy
