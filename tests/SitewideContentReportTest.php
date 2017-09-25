@@ -1,7 +1,18 @@
 <?php
 
+namespace SilverStripe\SiteWideContentReport\Tests;
+
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\ORM\DataList;
+use SilverStripe\SiteWideContentReport\SitewideContentReport;
+use SilverStripe\Forms\GridField\GridFieldDataColumns;
+use SilverStripe\Forms\GridField\GridFieldExportButton;
+use SilverStripe\SiteWideContentReport\Model\SitewideContentTaxonomy;
+use SilverStripe\Dev\SapphireTest;
+
 /**
- * @mixin PHPUnit_Framework_TestCase
+ * Class SitewideContentReportTest
+ * @package SilverStripe\SiteWideContentReport\Tests
  */
 class SitewideContentReportTest extends SapphireTest
 {
@@ -22,7 +33,7 @@ class SitewideContentReportTest extends SapphireTest
             $page = $this->objFromFixture('Page', "page{$i}");
 
             if ($i <= 3) {
-                $page->doPublish();
+                $page->publishRecursive();
             }
         }
     }
@@ -71,7 +82,7 @@ class SitewideContentReportTest extends SapphireTest
         $gridField = $report->getReportField('Pages');
 
         /* @var $columns GridFieldDataColumns */
-        $columns = $gridField->getConfig()->getComponentByType('GridFieldDataColumns');
+        $columns = $gridField->getConfig()->getComponentByType(GridFieldDataColumns::class);
         $displayed = $columns->getDisplayFields($gridField);
 
         $this->assertArrayHasKey('Title', $displayed);
@@ -98,7 +109,7 @@ class SitewideContentReportTest extends SapphireTest
 
         // Tests print / export field
         /* @var $export GridFieldExportButton */
-        $export = $gridField->getConfig()->getComponentByType('GridFieldExportButton');
+        $export = $gridField->getConfig()->getComponentByType(GridFieldExportButton::class);
         $exported = $export->getExportColumns();
 
         // Make sure all shared columns are in this report

@@ -8,7 +8,7 @@
 		"reports"
 	],
 	"require": {
-		"silverstripe/cms": "^3.1"
+		"silverstripe/cms": "^4.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^3.7",
@@ -31,6 +31,12 @@
 		"branch-alias": 
 		{
 			"dev-master": "2.0.x-dev"
+		}
+	},
+	"autoload": {
+		"psr-4": {
+			"SilverStripe\\SiteWideContentReport\\": "src/",
+			"SilverStripe\\SiteWideContentReport\\Tests\\": "tests/"
 		}
 	}
 }
