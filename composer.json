@@ -1,34 +1,35 @@
 {
-	"name": "silverstripe/sitewidecontent-report",
-	"description": "Report of all pages and files across all subsites",
-	"type": "silverstripe-module",
-	"license": "BSD-3-Clause",
-	"keywords": [
-		"silverstripe",
-		"reports"
-	],
-	"require": {
-		"silverstripe/cms": "^4.0"
-	},
-	"require-dev": {
-		"phpunit/phpunit": "^3.7"
-	},
-	"authors": [{
-		"name": "Carlos Barberis",
-		"email": "carlos@silverstripe.com"
-	}, {
-		"name": "Christopher Pitt",
-		"email": "cgpitt@gmail.com"
-	}],
-	"extra": {
-		"branch-alias": {
-			"dev-master": "3.x-dev"
-		}
-	},
-	"autoload": {
-		"psr-4": {
-			"SilverStripe\\SiteWideContentReport\\": "src/",
-			"SilverStripe\\SiteWideContentReport\\Tests\\": "tests/"
-		}
-	}
+    "name": "silverstripe/sitewidecontent-report",
+    "description": "Report of all pages and files across all subsites",
+    "type": "silverstripe-module",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "silverstripe",
+        "reports"
+    ],
+    "require": {
+        "silverstripe/cms": "^4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^3.7"
+    },
+    "authors": [{
+        "name": "Carlos Barberis",
+        "email": "carlos@silverstripe.com"
+    }, {
+        "name": "Christopher Pitt",
+        "email": "cgpitt@gmail.com"
+    }],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.x-dev"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "SilverStripe\\SiteWideContentReport\\": "src/",
+            "SilverStripe\\SiteWideContentReport\\Tests\\": "tests/"
+        }
+    }
 }
+
