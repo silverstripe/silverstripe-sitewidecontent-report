@@ -3,6 +3,7 @@
 namespace SilverStripe\SiteWideContentReport\Model;
 
 use SilverStripe\Core\Extension;
+use SilverStripe\SiteWideContentReport\SitewideContentReport;
 
 /**
  * Provides contentreview integration for sitewide content report.
@@ -29,13 +30,13 @@ class SitewideContentReview extends Extension
         // {@see SiteTreeContentReview::getOwnerNames()}
         $columns['OwnerNames'] = [
             'printonly' => true, // Hide on page report
-            'title' => _t('SitewideContentReport.Reviewer', 'Reviewer'),
+            'title' => _t(SitewideContentReport::class . '.Reviewer', 'Reviewer'),
         ];
 
         // {@see SiteTreeContentView::getReviewDate()}
         $columns['ReviewDate'] = [
             'printonly' => true, // Hide on page report
-            'title' => _t('SitewideContentReport.ReviewDate', 'Review Date'),
+            'title' => _t(SitewideContentReport::class . '.ReviewDate', 'Review Date'),
             'formatting' => function ($value, $record) {
                 if ($val = $record->getReviewDate()) {
                     return $val->Nice();

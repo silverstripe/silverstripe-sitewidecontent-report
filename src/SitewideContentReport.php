@@ -40,7 +40,7 @@ class SitewideContentReport extends Report
      */
     public function title()
     {
-        return _t('SitewideContentReport.Title', 'Site-wide content report');
+        return _t(__CLASS__ . '.Title', 'Site-wide content report');
     }
 
     /**
@@ -48,7 +48,7 @@ class SitewideContentReport extends Report
      */
     public function description()
     {
-        return _t('SitewideContentReport.Description', 'All pages and files across all Subsites');
+        return _t(__CLASS__ . '.Description', 'All pages and files across all Subsites');
     }
 
     /**
@@ -59,7 +59,7 @@ class SitewideContentReport extends Report
      */
     public function sourceRecords()
     {
-        if (class_exists('Subsite') && Subsite::get()->count() > 0) {
+        if (class_exists(Subsite::class) && Subsite::get()->count() > 0) {
             $origMode = Versioned::get_reading_mode();
             Versioned::set_reading_mode('Stage.Stage');
             $items = [
@@ -88,17 +88,17 @@ class SitewideContentReport extends Report
     {
         $columns = [
             'Title' => [
-                'title' => _t('SitewideContentReport.Name', 'Name'),
+                'title' => _t(__CLASS__ . '.Name', 'Name'),
                 'link' => true,
             ],
             'Created' => [
-                'title' => _t('SitewideContentReport.Created', 'Date created'),
+                'title' => _t(__CLASS__ . '.Created', 'Date created'),
                 'formatting' => function ($value, $item) {
                     return $item->dbObject('Created')->Nice();
                 },
             ],
             'LastEdited' => [
-                'title' => _t('SitewideContentReport.LastEdited', 'Date last edited'),
+                'title' => _t(__CLASS__ . '.LastEdited', 'Date last edited'),
                 'formatting' => function ($value, $item) {
                     return $item->dbObject('LastEdited')->Nice();
                 },
@@ -107,33 +107,33 @@ class SitewideContentReport extends Report
 
         if ($itemType == 'Pages') {
             // Page specific fields
-            $columns['i18n_singular_name'] = _t('SitewideContentReport.PageType', 'Page type');
+            $columns['i18n_singular_name'] = _t(__CLASS__ . '.PageType', 'Page type');
             $columns['StageState'] = [
-                'title' => _t('SitewideContentReport.Stage', 'Stage'),
+                'title' => _t(__CLASS__ . '.Stage', 'Stage'),
                 'formatting' => function ($value, $item) {
                     // Stage only
                     if (!$item->getExistsOnLive()) {
-                        return _t('SitewideContentReport.Draft', 'Draft');
+                        return _t(__CLASS__ . '.Draft', 'Draft');
                     }
 
                     // Pending changes
                     if ($item->getIsModifiedOnStage()) {
-                        return _t('SitewideContentReport.PublishedWithChanges', 'Published (with changes)');
+                        return _t(__CLASS__ . '.PublishedWithChanges', 'Published (with changes)');
                     }
 
                     // If on live and unmodified
-                    return _t('SitewideContentReport.Published', 'Published');
+                    return _t(__CLASS__ . '.Published', 'Published');
                 },
             ];
-            $columns['RelativeLink'] = _t('SitewideContentReport.Link', 'Link');
+            $columns['RelativeLink'] = _t(__CLASS__ . '.Link', 'Link');
             $columns['MetaDescription'] = [
-                'title' => _t('SitewideContentReport.MetaDescription', 'Description'),
+                'title' => _t(__CLASS__ . '.MetaDescription', 'Description'),
                 'printonly' => true,
             ];
         } else {
             // File specific fields
             $columns['FileType'] = [
-                'title' => _t('SitewideContentReport.FileType', 'File type'),
+                'title' => _t(__CLASS__ . '.FileType', 'File type'),
                 'datasource' => function ($record) {
                     // Handle folders separately
                     if ($record instanceof Folder) {
@@ -143,8 +143,8 @@ class SitewideContentReport extends Report
                     return $record->getFileType();
                 }
             ];
-            $columns['Size'] = _t('SitewideContentReport.Size', 'Size');
-            $columns['Filename'] = _t('SitewideContentReport.Directory', 'Directory');
+            $columns['Size'] = _t(__CLASS__ . '.Size', 'Size');
+            $columns['Filename'] = _t(__CLASS__ . '.Directory', 'Directory');
         }
 
         $this->extend('updateColumns', $itemType, $columns);
@@ -160,21 +160,21 @@ class SitewideContentReport extends Report
         Requirements::javascript('silverstripe/sitewidecontent-report: javascript/sitewidecontentreport.js');
         $fields = parent::getCMSFields();
 
-        if (class_exists('Subsite')) {
+        if (class_exists(Subsite::class)) {
             $subsites = Subsite::all_sites()->map();
             $fields->insertBefore(
-                HeaderField::create('PagesTitle', _t('SitewideContentReport.Pages', 'Pages'), 3),
+                HeaderField::create('PagesTitle', _t(__CLASS__ . '.Pages', 'Pages'), 3),
                 'Report-Pages'
             );
             $fields->insertBefore(
-                DropdownField::create('AllSubsites', _t('SitewideContentReport.FilterBy', 'Filter by:'), $subsites)
+                DropdownField::create('AllSubsites', _t(__CLASS__ . '.FilterBy', 'Filter by:'), $subsites)
                     ->addExtraClass('subsite-filter no-change-track')
                     ->setEmptyString('All Subsites'),
                 'Report-Pages'
             );
         }
 
-        $fields->push(HeaderField::create('FilesTitle', _t('SitewideContentReport.Files', 'Files'), 3));
+        $fields->push(HeaderField::create('FilesTitle', _t(__CLASS__ . '.Files', 'Files'), 3));
         $fields->push($this->getReportField('Files'));
 
         return $fields;
@@ -298,7 +298,7 @@ class SitewideContentReport extends Report
     public function getPrintExportColumns($gridField, $itemType, $exportColumns)
     {
         // Swap RelativeLink for AbsoluteLink for export
-        $exportColumns['AbsoluteLink'] = _t('SitewideContentReport.Link', 'Link');
+        $exportColumns['AbsoluteLink'] = _t(__CLASS__ . '.Link', 'Link');
         unset($exportColumns['RelativeLink']);
 
         $this->extend('updatePrintExportColumns', $gridField, $itemType, $exportColumns);

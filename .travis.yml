@@ -20,10 +20,13 @@ before_script:
   # Init PHP
   - phpenv rehash
   - phpenv config-rm xdebug.ini
+  - echo 'memory_limit = 2048M' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
   # Install composer dependencies
   - composer validate
   - composer require --no-update silverstripe/recipe-cms 1.0.x-dev
+  # This module has integration testing requirements
+  - composer require --no-update silverstripe/subsites:2.0.x-dev silverstripe/taxonomy:2.0.x-dev silverstripe/contentreview:4.0.x-dev
   - if [[ $DB == PGSQL ]]; then composer require --no-update silverstripe/postgresql 2.0.x-dev; fi
   - composer install --prefer-dist --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile
 

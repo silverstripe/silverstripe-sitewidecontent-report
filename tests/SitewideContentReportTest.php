@@ -9,6 +9,8 @@ use SilverStripe\Forms\GridField\GridFieldDataColumns;
 use SilverStripe\Forms\GridField\GridFieldExportButton;
 use SilverStripe\SiteWideContentReport\Model\SitewideContentTaxonomy;
 use SilverStripe\Dev\SapphireTest;
+use SilverStripe\Subsites\Model\Subsite;
+use SilverStripe\ContentReview\Extensions\SiteTreeContentReview;
 
 /**
  * Class SitewideContentReportTest
@@ -21,11 +23,17 @@ class SitewideContentReportTest extends SapphireTest
      */
     protected static $fixture_file = 'SitewideContentReportTest.yml';
 
-    /**
-     * {@inheritdoc}
-     */
     public function setUp()
     {
+        // This module is made to work with subsites, but will still operate
+        // without it (although presumably being of far less value).
+        // The fixture includes subsite definitions, which is a problem if
+        // the module isn't installed. So we'll use the same fixture without
+        // the subsites definitions if this is the case.
+        if (!class_exists(Subsite::class)) {
+            static::$fixture_file = 'SitewideContentReportNoSubsitesTest.yml';
+        }
+
         parent::setUp();
 
         foreach (range(1, 5) as $i) {
@@ -62,7 +70,7 @@ class SitewideContentReportTest extends SapphireTest
         $report = SitewideContentReport::create();
         $fields = $report->getCMSFields();
 
-        if (class_exists('Subsite')) {
+        if (class_exists(Subsite::class)) {
             $field = $fields->fieldByName('AllSubsites');
             $count = count(array_filter(array_keys($field->getSource()), function ($value) {
                 return is_int($value);
@@ -95,7 +103,7 @@ class SitewideContentReportTest extends SapphireTest
         $this->assertArrayHasKey('RelativeLink', $displayed);
         $this->assertArrayNotHasKey('AbsoluteLink', $displayed);
 
-        if (class_exists('Subsite')) {
+        if (class_exists(Subsite::class)) {
             $this->assertArrayHasKey('SubsiteName', $displayed);
         } else {
             $this->assertArrayNotHasKey('SubsiteName', $displayed);
@@ -126,7 +134,7 @@ class SitewideContentReportTest extends SapphireTest
         $this->assertArrayHasKey('AbsoluteLink', $exported);
         $this->assertArrayNotHasKey('RelativeLink', $exported);
 
-        if (class_exists('Subsite')) {
+        if (class_exists(Subsite::class)) {
             $this->assertArrayHasKey('SubsiteName', $exported);
         } else {
             $this->assertArrayNotHasKey('SubsiteName', $exported);
@@ -138,7 +146,7 @@ class SitewideContentReportTest extends SapphireTest
             $this->assertArrayNotHasKey('Terms', $exported);
         }
 
-        if (class_exists('SiteTreeContentReview')) {
+        if (class_exists(SiteTreeContentReview::class)) {
             $this->assertArrayHasKey('OwnerNames', $exported);
             $this->assertArrayHasKey('ReviewDate', $exported);
         } else {

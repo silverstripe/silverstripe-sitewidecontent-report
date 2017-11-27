@@ -4,6 +4,8 @@ namespace SilverStripe\SiteWideContentReport\Model;
 
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Extension;
+use SilverStripe\SiteWideContentReport\SitewideContentReport;
+use SilverStripe\Taxonomy\TaxonomyTerm;
 
 /**
  * Provides taxonomy integration for sitewide content report.
@@ -45,7 +47,7 @@ class SitewideContentTaxonomy extends Extension
         $field = Config::inst()->get(__CLASS__, 'tag_field');
         $columns['Terms'] = [
             'printonly' => true, // Hide on page report
-            'title' => _t('SitewideContentReport.Tags', 'Tags'),
+            'title' => _t(SitewideContentReport::class . '.Tags', 'Tags'),
             'datasource' => function ($record) use ($field) {
                 $tags = $record->$field()->column('Name');
 
@@ -61,7 +63,7 @@ class SitewideContentTaxonomy extends Extension
      */
     public static function enabled()
     {
-        if (!class_exists('TaxonomyTerm')) {
+        if (!class_exists(TaxonomyTerm::class)) {
             return false;
         }
 
