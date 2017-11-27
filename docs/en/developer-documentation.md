@@ -2,7 +2,7 @@
 
 ## Customising the output columns
 
-In order to customise the columns included in a report you can build a custom extension and apply it to the 
+In order to customise the columns included in a report you can build a custom extension and apply it to the
 SitewideContentReport as necessary.
 
 The build in extensions, for instance, each add custom columns extracted from other modules, and can
@@ -15,8 +15,10 @@ be used as a base for developing further extensions:
 For instance, in order to add a new Page field to the report you could add an extension similar to the below:
 
 
-	::php
-	<?php
+```php
+
+    use SilverStripe\Core\Extension;
+    use SilverStripe\SiteWideContentReport\SiteWideContentReport;
 
 	class MyReportExtension extends Extension {
 		public function updateColumns($itemType, &$columns) {
@@ -24,14 +26,14 @@ For instance, in order to add a new Page field to the report you could add an ex
 				return;
 			}
 			$columns["Price"] = array(
-				"title" => _t("SitewideContentReport.Subsite", "Subsite"),
+				"title" => _t(SitewideContentReport::class . ".Subsite", "Subsite"),
 				"formatting" => function ($value, $item) use ($mainSiteLabel) {
 					return number_format($value, 2, '.', ',');
 				},
 			);
 		}
 	}
-
+```
 
 The $columns array can have any number of items added, where the key of the array represents the
 field name to be included.

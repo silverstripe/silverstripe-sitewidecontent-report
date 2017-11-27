@@ -1,17 +1,18 @@
 {
     "name": "silverstripe/sitewidecontent-report",
     "description": "Report of all pages and files across all subsites",
-    "type": "silverstripe-module",
+    "type": "silverstripe-vendormodule",
     "license": "BSD-3-Clause",
     "keywords": [
         "silverstripe",
         "reports"
     ],
     "require": {
-        "silverstripe/cms": "^4.0"
+        "silverstripe/recipe-cms": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^3.7"
+        "phpunit/phpunit": "^3.7",
+        "squizlabs/php_codesniffer": "^3.0"
     },
     "authors": [{
         "name": "Carlos Barberis",
@@ -21,6 +22,9 @@
         "email": "cgpitt@gmail.com"
     }],
     "extra": {
+        "expose": [
+            "javascript"
+        ],
         "branch-alias": {
             "dev-master": "3.x-dev"
         }
@@ -32,4 +36,3 @@
         }
     }
 }
-

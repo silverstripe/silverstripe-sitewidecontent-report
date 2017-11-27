@@ -4,8 +4,7 @@ namespace SilverStripe\SiteWideContentReport;
 
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\GridField\GridField;
-// TODO uses Subsites module, it needs to be upgraded first
-use Subsite;
+use SilverStripe\Subsites\Model\Subsite;
 use Page;
 use SilverStripe\Versioned\Versioned;
 use SilverStripe\CMS\Model\SiteTree;
@@ -158,7 +157,7 @@ class SitewideContentReport extends Report
      */
     public function getCMSFields()
     {
-        Requirements::javascript(SITEWIDE_CONTENT_REPORT.'/javascript/sitewidecontentreport.js');
+        Requirements::javascript('silverstripe/sitewidecontent-report: javascript/sitewidecontentreport.js');
         $fields = parent::getCMSFields();
 
         if (class_exists('Subsite')) {

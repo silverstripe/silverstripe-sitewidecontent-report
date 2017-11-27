@@ -1,7 +1,7 @@
 ---
 Name: sitewidecontenttaxonomy
 Only:
-  moduleexists: taxonomy
+  moduleexists: silverstripe/taxonomy
 ---
 SilverStripe\SiteWideContentReport\SitewideContentReport:
   extensions:

@@ -2,7 +2,7 @@
 
 namespace SilverStripe\SiteWideContentReport\Model;
 
-use Subsite;
+use SilverStripe\Subsites\Model\Subsite;
 use SilverStripe\Core\Extension;
 
 /**

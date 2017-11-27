@@ -1,29 +1,35 @@
 # Site-wide content Report
 
+[![Build Status](http://img.shields.io/travis/silverstripe/silverstripe-sitewidecontent-report.svg?style=flat)](https://travis-ci.org/silverstripe/silverstripe-sitewidecontent-report)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/silverstripe/silverstripe-sitewidecontent-report/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/silverstripe/silverstripe-sitewidecontent-report/?branch=master)
+[![codecov](https://codecov.io/gh/silverstripe/silverstripe-sitewidecontent-report/branch/master/graph/badge.svg)](https://codecov.io/gh/silverstripe/silverstripe-sitewidecontent-report)
 
-This module adds a "All content, page and files from across all subsites" report in the CMS, so that
-an administrator can get a quick overview of content across subsite in the site.
+## Introduction
 
-[![Build Status](http://img.shields.io/travis/silverstripe/silverstripe-sitewidecontent-report.svg?style=flat-square)](https://travis-ci.org/silverstripe/silverstripe-sitewidecontent-report)
-[![Code Quality](http://img.shields.io/scrutinizer/g/silverstripe/silverstripe-sitewidecontent-report.svg?style=flat-square)](https://scrutinizer-ci.com/g/silverstripe/silverstripe-sitewidecontent-report)
-[![Version](http://img.shields.io/packagist/v/silverstripe/sitewidecontent-report.svg?style=flat-square)](https://packagist.org/packages/silverstripe/sitewidecontent-report)
-[![License](http://img.shields.io/packagist/l/silverstripe/sitewidecontent-report.svg?style=flat-square)](license.md)
+This module adds an "All content, page and files from across all subsites" report in the CMS, so that
+an administrator can get a quick overview of content across subsites in the parent site.
+
+## Requirements
+
+ * SilverStripe ^4.0
+
+**Note:** For a SilverStripe 3.x compatible version, please use [the 2.x release line](https://github.com/silverstripe/silverstripe-sitewidecontent-report/tree/2.0).
 
 ## Install
 
 ```sh
 $ composer require silverstripe/sitewidecontent-report
 ```
-You'll then need to visit your site with `?flush=1` in the url
+You'll then need to visit your site with `?flush` appended to the url
 
 ## Subsites Support
 
 If the [Subsites](https://github.com/silverstripe/silverstripe-subsites) module is installed
-then an additional column will be added, allowing you to see which subsites this user 
+then an additional column will be added, allowing you to see which subsites this user
 can edit pages on.
 
 To edit the permission to check for when filtering these subsites, you can update the
-`Member.subsite_description_permission` config to any other permission. By default this
+`SilverStripe\Security\Member.subsite_description_permission` config to any other permission. By default this
 is set to `SITETREE_EDIT_ALL`.
 
 ## Documentation
