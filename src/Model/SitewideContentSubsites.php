@@ -3,7 +3,6 @@
 namespace SilverStripe\SiteWideContentReport\Model;
 
 use SilverStripe\Core\Extension;
-use SilverStripe\SiteWideContentReport\SitewideContentReport;
 use SilverStripe\Subsites\Model\Subsite;
 
 /**
@@ -30,14 +29,17 @@ class SitewideContentSubsites extends Extension
         }
 
         // Set title
-        $mainSiteLabel = _t(SitewideContentReport::class . '.MainSite', 'Main Site');
+        $mainSiteLabel = _t('SilverStripe\\SiteWideContentReport\\SitewideContentReport.MainSite', 'Main Site');
         if ($itemType !== 'Pages') {
-            $mainSiteLabel .= ' '._t(SitewideContentReport::class . '.AccessFromAllSubsites', '(accessible by all subsites)');
+            $mainSiteLabel .= ' '._t(
+                'SilverStripe\\SiteWideContentReport\\SitewideContentReport.AccessFromAllSubsites',
+                '(accessible by all subsites)'
+            );
         }
 
         // Add subsite name
         $columns['SubsiteName'] = [
-            'title' => _t(SitewideContentReport::class . '.Subsite', 'Subsite'),
+            'title' => _t('SilverStripe\\SiteWideContentReport\\SitewideContentReport.Subsite', 'Subsite'),
             'datasource' => function ($item) use ($mainSiteLabel) {
                 $subsite = $item->Subsite();
 
