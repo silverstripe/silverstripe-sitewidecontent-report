@@ -34,5 +34,10 @@
             "SilverStripe\\SiteWideContentReport\\": "src/",
             "SilverStripe\\SiteWideContentReport\\Tests\\": "tests/"
         }
-    }
+    },
+    "suggest": {
+        "silverstripe/subsites": "In order to report across subsites, the subsites module must be installed"
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
 }

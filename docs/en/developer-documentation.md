@@ -5,7 +5,7 @@
 In order to customise the columns included in a report you can build a custom extension and apply it to the
 SitewideContentReport as necessary.
 
-The build in extensions, for instance, each add custom columns extracted from other modules, and can
+The built in extensions, for instance, each add custom columns extracted from other modules, and can
 be used as a base for developing further extensions:
 
  - `SitewideContentReview` - Integrates with the [content review](https://github.com/silverstripe/silverstripe-contentreview) module.
