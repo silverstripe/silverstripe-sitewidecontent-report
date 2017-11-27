@@ -1,7 +1,7 @@
 ---
 Name: sitewidecontentsubsites
 Only:
-  moduleexists: subsites
+  moduleexists: silverstripe/subsites
 ---
 SilverStripe\SiteWideContentReport\SitewideContentReport:
   extensions:

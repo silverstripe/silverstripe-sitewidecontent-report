@@ -1,5 +1,5 @@
 es:
-  SitewideContentReport:
+  SilverStripe\SiteWideContentReport\SitewideContentReport:
     AccessFromAllSubsites: '(accesible desde todos los sub sitios)'
     Created: Creado
     Description: 'Todas las páginas y archivo en todos los sub sitios'

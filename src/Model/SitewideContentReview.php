@@ -29,13 +29,13 @@ class SitewideContentReview extends Extension
         // {@see SiteTreeContentReview::getOwnerNames()}
         $columns['OwnerNames'] = [
             'printonly' => true, // Hide on page report
-            'title' => _t('SitewideContentReport.Reviewer', 'Reviewer'),
+            'title' => _t('SilverStripe\\SiteWideContentReport\\SitewideContentReport.Reviewer', 'Reviewer'),
         ];
 
         // {@see SiteTreeContentView::getReviewDate()}
         $columns['ReviewDate'] = [
             'printonly' => true, // Hide on page report
-            'title' => _t('SitewideContentReport.ReviewDate', 'Review Date'),
+            'title' => _t('SilverStripe\\SiteWideContentReport\\SitewideContentReport.ReviewDate', 'Review Date'),
             'formatting' => function ($value, $record) {
                 if ($val = $record->getReviewDate()) {
                     return $val->Nice();
