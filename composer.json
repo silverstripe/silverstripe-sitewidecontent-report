@@ -23,7 +23,8 @@
     }],
     "extra": {
         "expose": [
-            "javascript"
+            "javascript",
+            "css"
         ],
         "branch-alias": {
             "dev-master": "3.x-dev"
