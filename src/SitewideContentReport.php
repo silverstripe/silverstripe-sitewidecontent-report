@@ -48,7 +48,11 @@ class SitewideContentReport extends Report
      */
     public function description()
     {
-        return _t(__CLASS__ . '.Description', 'All pages and files across all Subsites');
+        if (class_exists(Subsite::class)) {
+            return _t(__CLASS__ . '.DescriptionIncludingSubsites', 'All pages and files across all Subsites');
+        } else {
+            return _t(__CLASS__ . '.Description', 'All pages and files across the system');
+        }
     }
 
     /**
@@ -75,6 +79,12 @@ class SitewideContentReport extends Report
                 'Files' => File::get(),
             ];
         }
+    }
+
+    public function getCount($params = array())
+    {
+        $records = $this->sourceRecords();
+        return $records['Pages']->count() + $records['Files']->count();
     }
 
     /**
@@ -112,12 +122,12 @@ class SitewideContentReport extends Report
                 'title' => _t(__CLASS__ . '.Stage', 'Stage'),
                 'formatting' => function ($value, $item) {
                     // Stage only
-                    if (!$item->getExistsOnLive()) {
+                    if (!$item->isPublished()) {
                         return _t(__CLASS__ . '.Draft', 'Draft');
                     }
 
                     // Pending changes
-                    if ($item->getIsModifiedOnStage()) {
+                    if ($item->isModifiedOnDraft()) {
                         return _t(__CLASS__ . '.PublishedWithChanges', 'Published (with changes)');
                     }
 
@@ -158,6 +168,7 @@ class SitewideContentReport extends Report
     public function getCMSFields()
     {
         Requirements::javascript('silverstripe/sitewidecontent-report: javascript/sitewidecontentreport.js');
+        Requirements::css('silverstripe/sitewidecontent-report: css/sitewidecontentreport.css');
         $fields = parent::getCMSFields();
 
         if (class_exists(Subsite::class)) {
@@ -177,6 +188,7 @@ class SitewideContentReport extends Report
         $fields->push(HeaderField::create('FilesTitle', _t(__CLASS__ . '.Files', 'Files'), 3));
         $fields->push($this->getReportField('Files'));
 
+
         return $fields;
     }
 
@@ -193,7 +205,7 @@ class SitewideContentReport extends Report
         $params = isset($_REQUEST['filters']) ? $_REQUEST['filters'] : array();
         $items = $this->sourceRecords($params, null, null);
 
-        $gridField = new GridFieldBasicContentReport('Report-'.$itemType, false, $items[$itemType]);
+        $gridField = new GridFieldBasicContentReport('Report-' . $itemType, false, $items[$itemType]);
 
         $gridFieldConfig = GridFieldConfig::create()->addComponents(
             new GridFieldToolbarHeader(),
@@ -290,8 +302,8 @@ class SitewideContentReport extends Report
      * Returns the columns for the export and print functionality.
      *
      * @param GridField $gridField
-     * @param string    $itemType      (i.e 'Pages' or 'Files')
-     * @param array     $exportColumns
+     * @param string $itemType (i.e 'Pages' or 'Files')
+     * @param array $exportColumns
      *
      * @return array
      */
