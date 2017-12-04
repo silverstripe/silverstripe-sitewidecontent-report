@@ -2,7 +2,7 @@ es:
   SilverStripe\SiteWideContentReport\SitewideContentReport:
     AccessFromAllSubsites: '(accesible desde todos los sub sitios)'
     Created: Creado
-    Description: 'Todas las páginas y archivo en todos los sub sitios'
+    Description: 'Todas las páginas y archivo'
     Directory: Directorio
     Draft: Borrador
     FileType: 'Tipo de archivo'
