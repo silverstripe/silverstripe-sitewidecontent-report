@@ -2,7 +2,9 @@
 
 namespace SilverStripe\SiteWideContentReport\Tests;
 
+use Page;
 use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\Core\Config\Config;
 use SilverStripe\ORM\DataList;
 use SilverStripe\SiteWideContentReport\SitewideContentReport;
 use SilverStripe\Forms\GridField\GridFieldDataColumns;
@@ -12,10 +14,6 @@ use SilverStripe\Dev\SapphireTest;
 use SilverStripe\Subsites\Model\Subsite;
 use SilverStripe\ContentReview\Extensions\SiteTreeContentReview;
 
-/**
- * Class SitewideContentReportTest
- * @package SilverStripe\SiteWideContentReport\Tests
- */
 class SitewideContentReportTest extends SapphireTest
 {
     /**
@@ -25,11 +23,12 @@ class SitewideContentReportTest extends SapphireTest
 
     public function setUp()
     {
-        // This module is made to work with subsites, but will still operate
-        // without it (although presumably being of far less value).
-        // The fixture includes subsite definitions, which is a problem if
-        // the module isn't installed. So we'll use the same fixture without
-        // the subsites definitions if this is the case.
+        // Stop default page creation from occuring - just use fixtures
+        Config::modify()->set(SiteTree::class, 'create_default_pages', false);
+
+        // This module is made to work with subsites, but will still operate without it (although presumably being of
+        // far less value). The fixture includes subsite definitions, which is a problem if the module isn't installed.
+        // So we'll use the same fixture without the subsites definitions if this is the case.
         if (!class_exists(Subsite::class)) {
             static::$fixture_file = 'SitewideContentReportNoSubsitesTest.yml';
         }
@@ -38,7 +37,7 @@ class SitewideContentReportTest extends SapphireTest
 
         foreach (range(1, 5) as $i) {
             /** @var SiteTree $page */
-            $page = $this->objFromFixture('Page', "page{$i}");
+            $page = $this->objFromFixture(Page::class, "page{$i}");
 
             if ($i <= 3) {
                 $page->publishRecursive();
@@ -51,7 +50,7 @@ class SitewideContentReportTest extends SapphireTest
         $report = SitewideContentReport::create();
         $records = $report->sourceRecords();
 
-        $this->assertEquals(count($records), 2, 'Returns an array with 2 items, one for pages and one for files');
+        $this->assertCount(2, $records, 'Returns an array with 2 items, one for pages and one for files');
         $this->assertArrayHasKey('Pages', $records);
         $this->assertArrayHasKey('Files', $records);
 
@@ -61,8 +60,8 @@ class SitewideContentReportTest extends SapphireTest
         /** @var DataList $files */
         $files = $records['Files'];
 
-        $this->assertEquals($pages->count(), 5, 'Total number of pages');
-        $this->assertEquals($files->count(), 1, 'Total number of files');
+        $this->assertCount(5, $pages, 'Total number of pages');
+        $this->assertCount(1, $files, 'Total number of files');
     }
 
     public function testGetCMSFields()
