@@ -2,30 +2,30 @@
 
 namespace SilverStripe\SiteWideContentReport;
 
-use SilverStripe\Forms\FieldList;
-use SilverStripe\Forms\GridField\GridField;
-use SilverStripe\Subsites\Model\Subsite;
 use Page;
-use SilverStripe\Versioned\Versioned;
-use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\AssetAdmin\Controller\AssetAdmin;
 use SilverStripe\Assets\File;
 use SilverStripe\Assets\Folder;
-use SilverStripe\View\Requirements;
-use SilverStripe\Forms\HeaderField;
-use SilverStripe\Forms\DropdownField;
-use SilverStripe\SiteWideContentReport\Form\GridFieldBasicContentReport;
-use SilverStripe\Forms\GridField\GridFieldConfig;
-use SilverStripe\Forms\GridField\GridFieldToolbarHeader;
-use SilverStripe\Forms\GridField\GridFieldSortableHeader;
-use SilverStripe\Forms\GridField\GridFieldDataColumns;
-use SilverStripe\Forms\GridField\GridFieldPaginator;
-use SilverStripe\Forms\GridField\GridFieldButtonRow;
-use SilverStripe\Forms\GridField\GridFieldPrintButton;
-use SilverStripe\Forms\GridField\GridFieldExportButton;
 use SilverStripe\CMS\Controllers\CMSPageEditController;
+use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Control\Controller;
-use SilverStripe\AssetAdmin\Controller\AssetAdmin;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\GridField\GridField;
+use SilverStripe\Forms\GridField\GridFieldButtonRow;
+use SilverStripe\Forms\GridField\GridFieldConfig;
+use SilverStripe\Forms\GridField\GridFieldDataColumns;
+use SilverStripe\Forms\GridField\GridFieldExportButton;
+use SilverStripe\Forms\GridField\GridFieldPaginator;
+use SilverStripe\Forms\GridField\GridFieldPrintButton;
+use SilverStripe\Forms\GridField\GridFieldSortableHeader;
+use SilverStripe\Forms\GridField\GridFieldToolbarHeader;
+use SilverStripe\Forms\HeaderField;
 use SilverStripe\Reports\Report;
+use SilverStripe\SiteWideContentReport\Form\GridFieldBasicContentReport;
+use SilverStripe\Subsites\Model\Subsite;
+use SilverStripe\Versioned\Versioned;
+use SilverStripe\View\Requirements;
 
 /**
  * Content side-report listing all pages and files from all sub sites.
@@ -59,9 +59,10 @@ class SitewideContentReport extends Report
      * Returns an array with 2 elements, one with a list of Page on the site (and all subsites if
      * applicable) and another with files.
      *
+     * @param array $params
      * @return array
      */
-    public function sourceRecords()
+    public function sourceRecords($params)
     {
         if (class_exists(Subsite::class) && Subsite::get()->count() > 0) {
             $origMode = Versioned::get_reading_mode();
@@ -70,15 +71,20 @@ class SitewideContentReport extends Report
                 'Pages' => Subsite::get_from_all_subsites(SiteTree::class),
                 'Files' => Subsite::get_from_all_subsites(File::class),
             ];
+
+            if (array_key_exists('AllSubsites', $params)) {
+                $items['Pages'] = $items['Pages']->filter(['SubsiteID' => $params['AllSubsites']]);
+                $items['Files'] = $items['Files']->filter(['SubsiteID' => [0, $params['AllSubsites']]]);
+            }
             Versioned::set_reading_mode($origMode);
 
             return $items;
-        } else {
-            return [
-                'Pages' => Versioned::get_by_stage(SiteTree::class, 'Stage'),
-                'Files' => File::get(),
-            ];
         }
+
+        return [
+            'Pages' => Versioned::get_by_stage(SiteTree::class, 'Stage'),
+            'Files' => File::get(),
+        ];
     }
 
     public function getCount($params = array())
@@ -115,7 +121,7 @@ class SitewideContentReport extends Report
             ],
         ];
 
-        if ($itemType == 'Pages') {
+        if ($itemType === 'Pages') {
             // Page specific fields
             $columns['i18n_singular_name'] = _t(__CLASS__ . '.PageType', 'Page type');
             $columns['StageState'] = [
@@ -167,27 +173,11 @@ class SitewideContentReport extends Report
      */
     public function getCMSFields()
     {
-        Requirements::javascript('silverstripe/sitewidecontent-report: javascript/sitewidecontentreport.js');
         Requirements::css('silverstripe/sitewidecontent-report: css/sitewidecontentreport.css');
         $fields = parent::getCMSFields();
 
-        if (class_exists(Subsite::class)) {
-            $subsites = Subsite::all_sites()->map();
-            $fields->insertBefore(
-                HeaderField::create('PagesTitle', _t(__CLASS__ . '.Pages', 'Pages'), 3),
-                'Report-Pages'
-            );
-            $fields->insertBefore(
-                DropdownField::create('AllSubsites', _t(__CLASS__ . '.FilterBy', 'Filter by:'), $subsites)
-                    ->addExtraClass('subsite-filter no-change-track')
-                    ->setEmptyString('All Subsites'),
-                'Report-Pages'
-            );
-        }
-
         $fields->push(HeaderField::create('FilesTitle', _t(__CLASS__ . '.Files', 'Files'), 3));
         $fields->push($this->getReportField('Files'));
-
 
         return $fields;
     }
@@ -316,5 +306,25 @@ class SitewideContentReport extends Report
         $this->extend('updatePrintExportColumns', $gridField, $itemType, $exportColumns);
 
         return $exportColumns;
+    }
+
+    public function parameterFields()
+    {
+        if (!class_exists(Subsite::class)) {
+            return null;
+        }
+
+        $subsites = Subsite::all_sites()->map()->toArray();
+        // Pad the 0 a little so doesn't get treated as the empty string and remove the original
+        $mainSite = ['000' => $subsites[0]];
+        unset($subsites[0]);
+        $subsites = $mainSite + $subsites;
+
+        $header = HeaderField::create('PagesTitle', _t(__CLASS__ . '.Pages', 'Pages'), 3);
+        $dropdown = DropdownField::create('AllSubsites', _t(__CLASS__ . '.FilterBy', 'Filter by:'), $subsites);
+        $dropdown->addExtraClass('subsite-filter no-change-track');
+        $dropdown->setEmptyString(_t(__CLASS__ . '.ALL_SUBSITES', 'All Subsites'));
+
+        return FieldList::create($header, $dropdown);
     }
 }
