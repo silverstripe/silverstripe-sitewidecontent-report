@@ -4,15 +4,17 @@ namespace SilverStripe\SiteWideContentReport\Tests;
 
 use Page;
 use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\ContentReview\Extensions\SiteTreeContentReview;
 use SilverStripe\Core\Config\Config;
-use SilverStripe\ORM\DataList;
-use SilverStripe\SiteWideContentReport\SitewideContentReport;
+use SilverStripe\Dev\SapphireTest;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\GridField\GridFieldDataColumns;
 use SilverStripe\Forms\GridField\GridFieldExportButton;
+use SilverStripe\ORM\DataList;
 use SilverStripe\SiteWideContentReport\Model\SitewideContentTaxonomy;
-use SilverStripe\Dev\SapphireTest;
+use SilverStripe\SiteWideContentReport\SitewideContentReport;
 use SilverStripe\Subsites\Model\Subsite;
-use SilverStripe\ContentReview\Extensions\SiteTreeContentReview;
 
 class SitewideContentReportTest extends SapphireTest
 {
@@ -48,7 +50,7 @@ class SitewideContentReportTest extends SapphireTest
     public function testSourceRecords()
     {
         $report = SitewideContentReport::create();
-        $records = $report->sourceRecords();
+        $records = $report->sourceRecords([]);
 
         $this->assertCount(2, $records, 'Returns an array with 2 items, one for pages and one for files');
         $this->assertArrayHasKey('Pages', $records);
@@ -64,18 +66,18 @@ class SitewideContentReportTest extends SapphireTest
         $this->assertCount(1, $files, 'Total number of files');
     }
 
-    public function testGetCMSFields()
+    public function testParameterFields()
     {
         $report = SitewideContentReport::create();
-        $fields = $report->getCMSFields();
+        /** @var FieldList $fields */
+        $fields = $report->parameterFields();
 
         if (class_exists(Subsite::class)) {
+            /** @var DropdownField $field */
             $field = $fields->fieldByName('AllSubsites');
-            $count = count(array_filter(array_keys($field->getSource()), function ($value) {
-                return is_int($value);
-            }));
+            $keys = array_filter(array_keys($field->getSource()));
 
-            $this->assertEquals(4, $count, '2 subsites plus 2 added options to filter by subsite');
+            $this->assertCount(4, $keys, '2 subsites plus 2 added options to filter by subsite');
         } else {
             $this->assertNull($fields->fieldByName('AllSubsites'));
         }
