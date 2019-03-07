@@ -62,7 +62,7 @@ class SitewideContentReport extends Report
      * @param array $params
      * @return array
      */
-    public function sourceRecords($params)
+    public function sourceRecords($params = [])
     {
         if (class_exists(Subsite::class) && Subsite::get()->count() > 0) {
             $origMode = Versioned::get_reading_mode();
