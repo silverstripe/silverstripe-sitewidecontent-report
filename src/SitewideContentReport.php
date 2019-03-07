@@ -242,7 +242,7 @@ class SitewideContentReport extends Report
                     }
 
                     return sprintf(
-                        "<a href='%s'>%s</a>",
+                        '<a href="%s" target="_blank" rel="noopener">%s</a>',
                         Controller::join_links(
                             singleton(AssetAdmin::class)->Link('EditForm'),
                             'field/File/item',
