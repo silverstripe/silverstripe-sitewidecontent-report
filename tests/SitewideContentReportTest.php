@@ -79,7 +79,7 @@ class SitewideContentReportTest extends SapphireTest
 
             $this->assertCount(4, $keys, '2 subsites plus 2 added options to filter by subsite');
         } else {
-            $this->assertNull($fields->fieldByName('AllSubsites'));
+            $this->assertNull($fields);
         }
     }
 
