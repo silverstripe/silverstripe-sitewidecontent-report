@@ -1,5 +1,6 @@
 en:
   SilverStripe\SiteWideContentReport\SitewideContentReport:
+    ALL_SUBSITES: 'All Subsites'
     AccessFromAllSubsites: '(accessible by all subsites)'
     Created: 'Date created'
     Description: 'All pages and files across the system'
@@ -25,4 +26,3 @@ en:
     Subsite: Subsite
     Tags: Tags
     Title: 'Site-wide content report'
-    URL: URL
