@@ -1,9 +1,8 @@
 en:
-  SilverStripe\SiteWideContentReport\SitewideContentReport:
+  SitewideContentReport:
     AccessFromAllSubsites: '(accessible by all subsites)'
     Created: 'Date created'
-    Description: 'All pages and files across the system'
-    DescriptionIncludingSubsites: 'All pages and files across all Subsites'
+    Description: 'All pages and files across all Subsites'
     Directory: Directory
     Draft: Draft
     FileType: 'File type'
