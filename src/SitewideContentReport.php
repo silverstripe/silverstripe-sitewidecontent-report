@@ -13,6 +13,7 @@ use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldButtonRow;
+use SilverStripe\Forms\GridField\GridFieldComponent;
 use SilverStripe\Forms\GridField\GridFieldConfig;
 use SilverStripe\Forms\GridField\GridFieldDataColumns;
 use SilverStripe\Forms\GridField\GridFieldExportButton;
@@ -204,7 +205,7 @@ class SitewideContentReport extends Report
             new GridFieldPaginator(),
             new GridFieldButtonRow('after'),
             $printButton = new GridFieldPrintButton('buttons-after-left'),
-            $exportButton = new GridFieldExportButton('buttons-after-left')
+            $exportButton = $this->getExportButton()
         );
 
         $gridField->setConfig($gridFieldConfig);
@@ -326,5 +327,15 @@ class SitewideContentReport extends Report
         $dropdown->setEmptyString(_t(__CLASS__ . '.ALL_SUBSITES', 'All Subsites'));
 
         return FieldList::create($header, $dropdown);
+    }
+
+    /**
+     * @return GridFieldComponent|GridFieldExportButton
+     */
+    protected function getExportButton()
+    {
+        $exportButton = new GridFieldExportButton('buttons-after-left');
+        $this->extend('updateExportButton', $exportButton);
+        return $exportButton;
     }
 }
