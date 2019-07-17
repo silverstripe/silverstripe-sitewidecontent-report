@@ -24,7 +24,7 @@ before_script:
   - composer validate
   - composer require --no-update silverstripe/recipe-cms "$RECIPE_VERSION"
   # This module has integration testing requirements
-  - composer require --no-update silverstripe/subsites:2.0.x-dev silverstripe/taxonomy:2.0.x-dev silverstripe/contentreview:4.0.x-dev
+  - composer require --no-update silverstripe/subsites:2.0.x-dev silverstripe/taxonomy:2.0.x-dev silverstripe/contentreview:4.1.x-dev
   - if [[ $DB == PGSQL ]]; then composer require --no-update silverstripe/postgresql 2.x-dev; fi
   - composer install --prefer-dist --no-interaction --no-progress --no-suggest --optimize-autoloader --verbose --profile
 
