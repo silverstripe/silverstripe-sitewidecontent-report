@@ -49,3 +49,39 @@ the following key => value pairs:
  * `printonly`: Set to true if this column is only visible on the print or export-to-csv views.
  * `casting`: Specify a field type (e.g. `Text` or `Int`) in order to assist with field casting. This is not
     necessary if `formatting` is used.
+
+## Performance considerations
+
+### Large data sets
+
+If your project has a large number of pages or files, you may experience server timeouts while trying to export
+this report to CSV. To avoid this issue, you can either increase your server timeout limit, or you can install
+and configure the [silverstripe/gridfieldqueuedexport module](https://github.com/silverstripe/silverstripe-gridfieldqueuedexport)
+which allows for CSV generation to offloaded to a queued job in the background.
+
+An example of configuring this module in your project:
+
+```php
+use SilverStripe\Core\Extension;
+use SilverStripe\Forms\GridField\GridFieldComponent;
+use SilverStripe\GridfieldQueuedExport\Forms\GridFieldQueuedExportButton;
+
+class SitewideContentReportQueuedExportExtension extends Extension
+{
+    public function updateExportButton(GridFieldComponent &$exportButton)
+    {
+        $exportButton = new GridFieldQueuedExportButton('buttons-after-left');
+    }
+}
+```
+
+Apply the example Extension above with YAML configuration in your project:
+
+```yaml
+---
+Name: queuedsitewidecontentreport
+---
+SilverStripe\SitewideContentReport\SitewideContentReport:
+  extensions:
+    - SitewideContentReportQueuedExportExtension
+```
