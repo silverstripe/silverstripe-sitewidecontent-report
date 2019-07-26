@@ -15,6 +15,9 @@ class SitewideContentReportTest extends SapphireTest
      */
     public function setUp()
     {
+        // Stop default page creation from occuring - just use fixtures
+        Config::inst()->update(SiteTree::class, 'create_default_pages', false);
+
         parent::setUp();
 
         foreach (range(1, 5) as $i) {
@@ -32,7 +35,7 @@ class SitewideContentReportTest extends SapphireTest
         $report = SitewideContentReport::create();
         $records = $report->sourceRecords();
 
-        $this->assertEquals(count($records), 2, 'Returns an array with 2 items, one for pages and one for files');
+        $this->assertCount(2, $records, 'Returns an array with 2 items, one for pages and one for files');
         $this->assertArrayHasKey('Pages', $records);
         $this->assertArrayHasKey('Files', $records);
 
@@ -42,8 +45,8 @@ class SitewideContentReportTest extends SapphireTest
         /** @var DataList $files */
         $files = $records['Files'];
 
-        $this->assertEquals($pages->count(), 5, 'Total number of pages');
-        $this->assertEquals($files->count(), 1, 'Total number of files');
+        $this->assertEquals(5, $pages->count(), 'Total number of pages');
+        $this->assertEquals(1, $files->count(), 'Total number of files');
     }
 
     public function testGetCMSFields()
