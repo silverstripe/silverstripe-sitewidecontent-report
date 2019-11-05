@@ -25,10 +25,7 @@
         "expose": [
             "javascript",
             "css"
-        ],
-        "branch-alias": {
-            "dev-master": "3.x-dev"
-        }
+        ]
     },
     "autoload": {
         "psr-4": {
