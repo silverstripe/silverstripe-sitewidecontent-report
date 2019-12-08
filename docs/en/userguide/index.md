@@ -1,5 +1,7 @@
+---
 title: Site-wide content report
 summary: View report of all content on your site (and subsites).
+---
 
 # Site-wide content report user guide
 
