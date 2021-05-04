@@ -14,21 +14,21 @@
         "sminnee/phpunit": "^5.7",
         "squizlabs/php_codesniffer": "^3.0"
     },
-    "authors": [{
-        "name": "Carlos Barberis",
-        "email": "carlos@silverstripe.com"
-    }, {
-        "name": "Christopher Pitt",
-        "email": "cgpitt@gmail.com"
-    }],
+    "authors": [
+        {
+            "name": "Carlos Barberis",
+            "email": "carlos@silverstripe.com"
+        },
+        {
+            "name": "Christopher Pitt",
+            "email": "cgpitt@gmail.com"
+        }
+    ],
     "extra": {
         "expose": [
             "javascript",
             "css"
-        ],
-        "branch-alias": {
-            "dev-master": "3.x-dev"
-        }
+        ]
     },
     "autoload": {
         "psr-4": {
