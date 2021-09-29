@@ -34,7 +34,8 @@
     "autoload": {
         "psr-4": {
             "SilverStripe\\SiteWideContentReport\\": "src/",
-            "SilverStripe\\SiteWideContentReport\\Tests\\": "tests/"
+            "SilverStripe\\SiteWideContentReport\\Tests\\": "tests/",
+            "SilverStripe\\SiteWideContentReport\\Tests\\Behat\\Context\\": "tests/behat/src/"
         }
     },
     "suggest": {
