@@ -23,7 +23,7 @@ class SitewideContentReportTest extends SapphireTest
      */
     protected static $fixture_file = 'SitewideContentReportTest.yml';
 
-    public function setUp()
+    protected function setUp(): void
     {
         // Stop default page creation from occuring - just use fixtures
         Config::modify()->set(SiteTree::class, 'create_default_pages', false);
