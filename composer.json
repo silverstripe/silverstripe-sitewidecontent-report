@@ -8,8 +8,9 @@
         "reports"
     ],
     "require": {
-        "php": "^7.3 || ^8.0",
-        "silverstripe/cms": "^4.0"
+        "php": "^7.4 || ^8.0",
+        "silverstripe/cms": "^4.0",
+        "silverstripe/reports": "^4.11"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",

@@ -88,7 +88,7 @@ class SitewideContentReport extends Report
         ];
     }
 
-    public function getCount($params = array())
+    public function getCount($params = [], $limit = null)
     {
         $records = $this->sourceRecords();
         return $records['Pages']->count() + $records['Files']->count();
