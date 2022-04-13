@@ -73,7 +73,7 @@ class SitewideContentReport extends Report
                 'Files' => Subsite::get_from_all_subsites(File::class),
             ];
 
-            if (array_key_exists('AllSubsites', $params)) {
+            if (array_key_exists('AllSubsites', $params ?? [])) {
                 $items['Pages'] = $items['Pages']->filter(['SubsiteID' => $params['AllSubsites']]);
                 $items['Files'] = $items['Files']->filter(['SubsiteID' => [0, $params['AllSubsites']]]);
             }
