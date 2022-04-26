@@ -75,7 +75,7 @@ class SitewideContentReportTest extends SapphireTest
         if (class_exists(Subsite::class)) {
             /** @var DropdownField $field */
             $field = $fields->fieldByName('AllSubsites');
-            $keys = array_filter(array_keys($field->getSource()));
+            $keys = array_filter(array_keys($field->getSource() ?? []));
 
             $this->assertCount(4, $keys, '2 subsites plus 2 added options to filter by subsite');
         } else {
