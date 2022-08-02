@@ -1,9 +1,7 @@
 # Site-wide content Report
 
 [![CI](https://github.com/silverstripe/silverstripe-sitewidecontent-report/actions/workflows/ci.yml/badge.svg)](https://github.com/silverstripe/silverstripe-sitewidecontent-report/actions/workflows/ci.yml)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/silverstripe/silverstripe-sitewidecontent-report/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/silverstripe/silverstripe-sitewidecontent-report/?branch=master)
-[![codecov](https://codecov.io/gh/silverstripe/silverstripe-sitewidecontent-report/branch/master/graph/badge.svg)](https://codecov.io/gh/silverstripe/silverstripe-sitewidecontent-report)
-[![SilverStripe supported module](https://img.shields.io/badge/silverstripe-supported-0071C4.svg)](https://www.silverstripe.org/software/addons/silverstripe-commercially-supported-module-list/)
+[![Silverstripe supported module](https://img.shields.io/badge/silverstripe-supported-0071C4.svg)](https://www.silverstripe.org/software/addons/silverstripe-commercially-supported-module-list/)
 
 ## Introduction
 
@@ -12,9 +10,9 @@ an administrator can get a quick overview of content across subsites in the pare
 
 ## Requirements
 
- * SilverStripe ^4.0
+ * Silverstripe ^4.0
 
-**Note:** For a SilverStripe 3.x compatible version, please use [the 2.x release line](https://github.com/silverstripe/silverstripe-sitewidecontent-report/tree/2.0).
+**Note:** For a Silverstripe 3.x compatible version, please use [the 2.x release line](https://github.com/silverstripe/silverstripe-sitewidecontent-report/tree/2.0).
 
 ## Install
 
