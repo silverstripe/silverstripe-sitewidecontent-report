@@ -4,13 +4,12 @@ Feature: Site wide content report
 
   Background:
 
-    Given the "group" "EDITOR group" has permissions "CMS_ACCESS_LeftAndMain"
-    And a "page" "My page" has the "Content" "<p>My content</p>"
+    Given a "page" "My page" has the "Content" "<p>My content</p>"
     And a "file" "test1.pdf"
-
-    Given I am logged in with "ADMIN" permissions
+    And the "group" "EDITOR" has permissions "Access to 'Pages' section" and "Access to 'Reports' section" and "Access to 'Files' section" and "FILE_EDIT_ALL"
 
     # Create a subsite
+    And I am logged in with "ADMIN" permissions
     And I go to "/admin/subsites"
     And I press the "Add Subsite" button
     And I fill in "Subsite Name" with "My subsite"
@@ -19,9 +18,11 @@ Feature: Site wide content report
     # Add a page to the subsite
     Given a "page" "The subsite page" with "SubsiteID"="1" and "Content"="<p>My subsite content</p>"
 
-  Scenario: Operate site wide content report
+    And I am not logged in
 
-    When I go to "/admin/reports"
+  Scenario: Operate site wide content report
+    When I am logged in as a member of "EDITOR" group
+    And I go to "/admin/reports"
     And I follow "Site-wide content report"
     
     # Show all Pages
