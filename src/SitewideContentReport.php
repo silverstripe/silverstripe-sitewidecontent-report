@@ -174,7 +174,7 @@ class SitewideContentReport extends Report
      */
     public function getCMSFields()
     {
-        Requirements::css('silverstripe/sitewidecontent-report: css/sitewidecontentreport.css');
+        Requirements::css('silverstripe/sitewidecontent-report: client/dist/styles/sitewidecontentreport.css');
         $fields = parent::getCMSFields();
 
         $fields->push(HeaderField::create('FilesTitle', _t(__CLASS__ . '.Files', 'Files'), 3));
