@@ -8,18 +8,11 @@
 This module adds an "All content, page and files from across all subsites" report in the CMS, so that
 an administrator can get a quick overview of content across subsites in the parent site.
 
-## Requirements
-
- * Silverstripe ^4.0
-
-**Note:** For a Silverstripe 3.x compatible version, please use [the 2.x release line](https://github.com/silverstripe/silverstripe-sitewidecontent-report/tree/2.0).
-
-## Install
+## Installation
 
 ```sh
-$ composer require silverstripe/sitewidecontent-report
+composer require silverstripe/sitewidecontent-report
 ```
-You'll then need to visit your site with `?flush` appended to the url
 
 ## Subsites Support
 
