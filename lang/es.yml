@@ -1,4 +1,21 @@
 es:
+  SilverStripe\SiteWideContentReport\SitewideContentReport:
+    AccessFromAllSubsites: '(accesible desde todos los sub sitios)'
+    Created: Creado
+    DescriptionIncludingSubsites: 'Todas las páginas y archivo en todos los sub sitios'
+    Directory: Directorio
+    Draft: Borrador
+    FileType: 'Tipo de archivo'
+    Files: Archivos
+    FilterBy: 'Filtro:'
+    LastEdited: 'Fecha de último cambio'
+    Name: Nombre
+    PageType: 'Tipo de página'
+    Pages: Páginas
+    Published: Publicado
+    Stage: Estado
+    Subsite: 'Sub sitio'
+    Title: 'Reporte del contenido en todo el sitio'
   SitewideContentReport:
     AccessFromAllSubsites: '(accesible desde todos los sub sitios)'
     Created: Creado
@@ -17,20 +34,3 @@ es:
     Subsite: 'Sub sitio'
     Title: 'Reporte del contenido en todo el sitio'
     URL: URL
-  SilverStripe\SiteWideContentReport\SitewideContentReport:
-    AccessFromAllSubsites: '(accesible desde todos los sub sitios)'
-    Created: Creado
-    DescriptionIncludingSubsites: 'Todas las páginas y archivo en todos los sub sitios'
-    Directory: Directorio
-    Draft: Borrador
-    FileType: 'Tipo de archivo'
-    Files: Archivos
-    FilterBy: 'Filtro:'
-    LastEdited: 'Fecha de último cambio'
-    Name: Nombre
-    PageType: 'Tipo de página'
-    Pages: Páginas
-    Published: Publicado
-    Stage: Estado
-    Subsite: 'Sub sitio'
-    Title: 'Reporte del contenido en todo el sitio'
