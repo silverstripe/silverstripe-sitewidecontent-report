@@ -3,13 +3,12 @@
 namespace SilverStripe\SiteWideContentReport\Model;
 
 use SilverStripe\Core\Extension;
+use SilverStripe\SiteWideContentReport\SitewideContentReport;
 
 /**
  * Provides contentreview integration for sitewide content report.
  *
- * Requires https://github.com/silverstripe/silverstripe-contentreview
- * Class SitewideContentReview
- * @package SilverStripe\SiteWideContentReport\Model
+ * @extends Extension<SitewideContentReport>
  */
 class SitewideContentReview extends Extension
 {
