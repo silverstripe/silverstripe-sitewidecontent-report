@@ -4,15 +4,13 @@ namespace SilverStripe\SiteWideContentReport\Model;
 
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Extension;
+use SilverStripe\SiteWideContentReport\SitewideContentReport;
 use SilverStripe\Taxonomy\TaxonomyTerm;
 
 /**
  * Provides taxonomy integration for sitewide content report.
  *
- * Requires https://github.com/silverstripe-labs/silverstripe-taxonomy
- *
- * Class SitewideContentTaxonomy
- * @package SilverStripe\SiteWideContentReport\Model
+ * @extends Extension<SitewideContentReport>
  */
 class SitewideContentTaxonomy extends Extension
 {

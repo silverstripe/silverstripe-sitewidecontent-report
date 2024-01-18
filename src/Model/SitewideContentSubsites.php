@@ -3,15 +3,14 @@
 namespace SilverStripe\SiteWideContentReport\Model;
 
 use SilverStripe\Core\Extension;
+use SilverStripe\SiteWideContentReport\Form\GridFieldBasicContentReport;
+use SilverStripe\SiteWideContentReport\SitewideContentReport;
 use SilverStripe\Subsites\Model\Subsite;
 
 /**
  * Provides subsite integration for sitewide content report.
  *
- * Requires https://github.com/silverstripe/silverstripe-subsites
- *
- * Class SitewideContentSubsites
- * @package SilverStripe\SiteWideContentReport\Model
+ * @extends Extension<SitewideContentReport|GridFieldBasicContentReport>
  */
 class SitewideContentSubsites extends Extension
 {
