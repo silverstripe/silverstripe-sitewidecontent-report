@@ -46,9 +46,13 @@ class SitewideContentTaxonomy extends Extension
             'printonly' => true, // Hide on page report
             'title' => _t('SilverStripe\\SiteWideContentReport\\SitewideContentReport.Tags', 'Tags'),
             'datasource' => function ($record) use ($field) {
-                $tags = $record->$field()->column('Name');
+                if ($record->hasMethod($field)) {
+                    $tags = $record->$field()->column('Name');
 
-                return implode(', ', $tags);
+                    return implode(', ', $tags);
+                }
+
+                return '';
             },
         ];
     }
